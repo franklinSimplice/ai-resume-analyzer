@@ -1,0 +1,275 @@
+{
+  "navigation": {
+    "title": "RESUME<span class=\"text-blue-600\">E</span>LY",
+    "home": "Home",
+    "about": "About",
+    "pricing": "Pricing",
+    "myResumes": "My Resumes",
+    "analyze": "Analyze",
+    "createResume": "Create Resume"
+  },
+  "home": {
+    "heroBadge": "AI-Powered Resume Platform",
+    "heroTitle": "Create your perfect resume ",
+    "heroTyped1": "that beats ATS systems",
+    "heroTyped2": "tailored to any job",
+    "heroTyped3": "in under 2 minutes",
+    "heroTyped4": "powered by AI",
+    "heroSubtitle": "Build ATS-optimized resumes, get instant AI analysis, and land interviews faster. Our intelligent platform helps you craft the perfect resume for any role.",
+    "createResumeBtn": "Create My Resume",
+    "analyzeBtn": "Analyze Existing Resume",
+    "trustedByText": "Trusted by <strong>{{count}}</strong> job seekers",
+    "stats": {
+      "resumesCreated": "Resumes Created",
+      "atsPassRate": "ATS Pass Rate",
+      "templates": "Templates Available"
+    },
+    "features": {
+      "title": "Why use ResumeEly?",
+      "subtitle": "Everything you need to create the perfect resume and land your dream job.",
+      "aiBuilder": {
+        "title": "AI Resume Builder",
+        "description": "Generate professional, ATS-optimized resumes tailored to specific job descriptions using advanced AI."
+      },
+      "atsAnalysis": {
+        "title": "ATS Score Analysis",
+        "description": "Get instant scoring and feedback on how well your resume will perform against Applicant Tracking Systems."
+      },
+      "templates": {
+        "title": "Professional Templates",
+        "description": "Choose from beautifully designed templates that are proven to catch recruiters' attention."
+      },
+      "editor": {
+        "title": "Real-Time Editor",
+        "description": "Edit your resume with a live preview and AI-powered suggestions to optimize every section."
+      },
+      "export": {
+        "title": "One-Click Export",
+        "description": "Download your polished resume as PDF or DOC instantly, ready to submit to employers."
+      },
+      "personalization": {
+        "title": "Smart Personalization",
+        "description": "Automatically tailor your resume keywords and phrasing to match each job posting perfectly."
+      }
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "subtitle": "Get from zero to interview-ready in three easy steps.",
+      "step1": {
+        "title": "Input Your Details",
+        "description": "Enter your experience, skills, and the job description you're targeting. Our AI handles the rest."
+      },
+      "step2": {
+        "title": "AI Generates & Optimizes",
+        "description": "Our AI crafts a tailored, ATS-friendly resume with industry-specific keywords and formatting."
+      },
+      "step3": {
+        "title": "Download & Apply",
+        "description": "Export your resume as PDF, fine-tune in our editor, and start applying with confidence."
+      }
+    },
+    "cta": {
+      "title": "Ready to land your dream job?",
+      "subtitle": "Join thousands of professionals who've boosted their career with ResumeEly.",
+      "getStarted": "Get Started — It's Free",
+      "viewResumes": "View My Resumes"
+    }
+  },
+  "createResume": {
+    "title": "Create Your Professional Resume",
+    "subtitle": "Fill in your information to generate an optimized resume.",
+    "contactInfo": "Contact Information",
+    "fullName": "Full Name",
+    "emailAddress": "Email Address",
+    "phoneNumber": "Phone Number",
+    "citizenship": "Citizenship",
+    "linkedin": "LinkedIn Profile",
+    "github": "GitHub Profile",
+    "jobInfo": "Target Job Information",
+    "jobTitle": "Target Job Title",
+    "jobDescription": "Job Description",
+    "background": "Your Background",
+    "experience": "Work Experience",
+    "skills": "Technical Skills",
+    "education": "Education",
+    "templates": "Template Options",
+    "generate": "Generate Resume"
+  },
+  "about": {
+    "hero": {
+      "tag": "About Us",
+      "title": "We help you <span class=\"text-accent\">land your dream job</span>",
+      "subtitle": "ResumeEly is an AI-powered platform that levels the playing field for job seekers. We believe everyone deserves a fair shot at their ideal career."
+    },
+    "mission": {
+      "tag": "Our Mission",
+      "title": "Empowering careers through intelligent technology",
+      "p1": "Traditional job applications often rely heavily on how well a resume is formatted or whether it contains the right keywords, rather than the candidate's actual qualifications.",
+      "p2": "Our AI-powered platform levels the playing field by helping job seekers create professional, ATS-optimized resumes that highlight their true potential and increase their chances of getting noticed by hiring managers.",
+      "p3": "We're committed to making the job search process more equitable, efficient, and successful for everyone involved.",
+      "stats": {
+        "jobSeekers": "Job seekers helped",
+        "atsPass": "ATS pass rate",
+        "interviews": "More interviews"
+      }
+    },
+    "values": {
+      "tag": "What We Believe",
+      "title": "Our Core Values",
+      "desc": "The principles that guide every feature we build and every decision we make.",
+      "integrity": {
+        "title": "Integrity",
+        "desc": "We believe in honest, transparent practices. Your data stays private, and our AI provides truthful, grounded analysis of your resume."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "desc": "We continuously improve our AI technology, staying at the cutting edge of natural language processing to deliver best-in-class results."
+      },
+      "accessibility": {
+        "title": "Accessibility",
+        "desc": "Professional resume tools should be available to everyone, regardless of background, experience level, or budget."
+      },
+      "userFirst": {
+        "title": "User-First",
+        "desc": "Every feature, every design decision, and every AI model we ship is evaluated through one lens: does it help our users succeed?"
+      }
+    },
+    "team": {
+      "tag": "Our People",
+      "title": "The Team Behind ResumeEly",
+      "desc": "A small but dedicated team building the future of career tools.",
+      "members": {
+        "founder": {
+          "name": "Franklin",
+          "role": "Founder & Lead Developer",
+          "desc": "Passionate about creating AI solutions that empower individuals in their career journeys."
+        },
+        "ai": {
+          "name": "AI Assistant",
+          "role": "AI Technology Partner",
+          "desc": "Cutting-edge artificial intelligence powering our resume analysis and creation tools."
+        },
+        "puter": {
+          "name": "Puter Platform",
+          "role": "Infrastructure Partner",
+          "desc": "Secure, scalable cloud infrastructure enabling our platform to serve users globally."
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to join our journey?",
+      "subtitle": "Create your optimized resume today and take the first step towards your dream career.",
+      "primaryBtn": "Get Started — It's Free",
+      "ghostBtn": "View Pricing Plans"
+    }
+  },
+  "pricing": {
+    "title": "Simple, transparent <span class=\"text-accent\">pricing</span>",
+    "subtitle": "Choose the plan that works best for your career goals. All plans include our core AI-powered features.",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "save20": "Save 20%",
+    "popular": "Most Popular",
+    "faqTitle": "Frequently Asked Questions",
+    "faqDesc": "Everything you need to know about our pricing and plans.",
+    "ctaTitle": "Ready to transform your career?",
+    "ctaDesc": "Join thousands of professionals who've landed their dream jobs with ResumeEly.",
+    "ctaBtn": "Start Your Free Plan",
+    "plans": {
+      "free": {
+        "name": "Free",
+        "period": "forever",
+        "desc": "Perfect for getting started with AI-powered resumes.",
+        "f1": "Create up to 3 resumes",
+        "f2": "Basic ATS analysis",
+        "f3": "Download as PDF",
+        "f4": "Community support",
+        "btn": "Get Started Free"
+      },
+      "professional": {
+        "name": "Professional",
+        "periodMoAnn": "per month, billed annually",
+        "periodMo": "per month",
+        "desc": "Ideal for serious job seekers who need every edge.",
+        "f1": "Unlimited resume creation",
+        "f2": "Advanced ATS optimization",
+        "f3": "Download in PDF & DOC formats",
+        "f4": "Priority email support",
+        "f5": "Resume version history",
+        "f6": "Cover letter generator",
+        "btn": "Start Free Trial"
+      },
+      "career": {
+        "name": "Career Growth",
+        "periodMoAnn": "per month, billed annually",
+        "periodMo": "per month",
+        "desc": "For career changers and executives who want it all.",
+        "f1": "Everything in Professional",
+        "f2": "Personalized career coaching",
+        "f3": "LinkedIn profile optimization",
+        "f4": "Interview preparation materials",
+        "f5": "Salary negotiation guide",
+        "f6": "Dedicated career advisor",
+        "btn": "Start Free Trial"
+      }
+    },
+    "faqs": {
+      "q1": "Can I switch plans anytime?",
+      "a1": "Yes, you can upgrade, downgrade, or cancel your subscription at any time. Changes take effect immediately, and you'll only be charged for the time you use each plan.",
+      "q2": "Is there a free trial?",
+      "a2": "All paid plans come with a 7-day free trial. No credit card required to start your trial.",
+      "q3": "What payment methods do you accept?",
+      "a3": "We accept all major credit cards including Visa, Mastercard, American Express, and Discover. For annual plans, we also offer invoicing and bank transfers.",
+      "q4": "Do you offer discounts for students?",
+      "a4": "Yes, we offer special pricing for students and non-profit organizations. Please contact our support team with proof of your status to receive a discount code."
+    }
+  },
+  "upload": {
+    "title": "Smart feedback for your dream Job",
+    "subtitle": "Drop your resume for an ATS score and AI-powered improvements.",
+    "status": {
+      "uploading": "uploading the file...",
+      "converting": "Converting to image...",
+      "uploadImg": "Uploading the image...",
+      "preparing": "Preparing data...",
+      "analyzing": "Analysing... This can take a moment.",
+      "saving": "Saving results...",
+      "redirecting": "Redirecting...",
+      "default": "Analysing ..."
+    },
+    "form": {
+      "company": "Company Name",
+      "companyPh": "Google",
+      "jobTitle": "Job Title",
+      "jobTitlePh": "Software Engineer",
+      "jobDesc": "Job Description",
+      "jobDescPh": "Paste job description here...",
+      "btn": "Analyze resume"
+    },
+    "uploader": {
+      "fileSelected": "File Selected",
+      "clickUpload": "Click to Upload",
+      "dragDrop": " or drag and drop",
+      "maxSize": "max PDF size: 20 MB"
+    }
+  },
+  "myResumes": {
+    "title": "Resumes",
+    "subtitle": "Create, edit and manage your resumes.",
+    "clearAll": "Clear All",
+    "addResume": "Add Resume",
+    "edited": "Edited: {{time}}",
+    "openEditor": "Open in Editor",
+    "makeCopy": "Make a copy",
+    "downloadPdf": "Download PDF",
+    "delete": "Delete",
+    "deleteModal": {
+      "title": "Delete Resume?",
+      "descAll": "Are you sure you want to delete ALL resumes? This action cannot be undone.",
+      "descSingle": "Are you sure you want to delete this resume? This action cannot be undone.",
+      "confirm": "Yes, Delete",
+      "deleting": "Deleting...",
+      "cancel": "Cancel"
+    }
+  }
+}

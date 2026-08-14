@@ -1,0 +1,275 @@
+{
+  "navigation": {
+    "title": "RESUME<span class=\"text-blue-600\">E</span>LY",
+    "home": "Inicio",
+    "about": "Acerca de",
+    "pricing": "Precios",
+    "myResumes": "Mis CVs",
+    "analyze": "Analizar",
+    "createResume": "Crear CV"
+  },
+  "home": {
+    "heroBadge": "Plataforma de CV Impulsada por IA",
+    "heroTitle": "Crea tu CV perfecto ",
+    "heroTyped1": "que supera los sistemas ATS",
+    "heroTyped2": "adaptado a cualquier trabajo",
+    "heroTyped3": "en menos de 2 minutos",
+    "heroTyped4": "impulsado por IA",
+    "heroSubtitle": "Construye CV optimizados para ATS, obtén análisis instantáneos de IA y consigue entrevistas más rápido. Nuestra plataforma inteligente te ayuda a crear el CV perfecto para cualquier rol.",
+    "createResumeBtn": "Crear Mi CV",
+    "analyzeBtn": "Analizar CV Existente",
+    "trustedByText": "Confían <strong>{{count}}</strong> buscadores de empleo",
+    "stats": {
+      "resumesCreated": "CV Creados",
+      "atsPassRate": "Tasa de Aprobación ATS",
+      "templates": "Plantillas Disponibles"
+    },
+    "features": {
+      "title": "¿Por qué usar ResumeEly?",
+      "subtitle": "Todo lo que necesitas para crear el CV perfecto y conseguir tu trabajo soñado.",
+      "aiBuilder": {
+        "title": "Constructor de CV con IA",
+        "description": "Genera CV profesionales optimizados para ATS adaptados a descripciones de trabajo específicas usando IA avanzada."
+      },
+      "atsAnalysis": {
+        "title": "Análisis de Puntuación ATS",
+        "description": "Obtén puntuación y retroalimentación instantánea sobre el rendimiento de tu CV contra los Sistemas de Seguimiento de Solicitantes."
+      },
+      "templates": {
+        "title": "Plantillas Profesionales",
+        "description": "Elige entre plantillas bellamente diseñadas que están comprobadas para captar la atención de los reclutadores."
+      },
+      "editor": {
+        "title": "Editor en Tiempo Real",
+        "description": "Edita tu CV con vista previa en vivo y sugerencias impulsadas por IA para optimizar cada sección."
+      },
+      "export": {
+        "title": "Exportación con Un Clic",
+        "description": "Descarga tu CV pulido como PDF o DOC instantáneamente, listo para enviar a empleadores."
+      },
+      "personalization": {
+        "title": "Personalización Inteligente",
+        "description": "Adapta automáticamente las palabras clave y frases de tu CV para que coincidan perfectamente con cada oferta de trabajo."
+      }
+    },
+    "howItWorks": {
+      "title": "Cómo funciona",
+      "subtitle": "Pasa de cero a estar listo para entrevista en tres pasos fáciles.",
+      "step1": {
+        "title": "Ingresa Tus Datos",
+        "description": "Introduce tu experiencia, habilidades y la descripción del trabajo al que apuntas. Nuestra IA se encarga del resto."
+      },
+      "step2": {
+        "title": "IA Genera y Optimiza",
+        "description": "Nuestra IA crea un CV adaptado y amigable con ATS con palabras clave y formato específicos de la industria."
+      },
+      "step3": {
+        "title": "Descarga y Aplica",
+        "description": "Exporta tu CV como PDF, ajústalo en nuestro editor y comienza a aplicar con confianza."
+      }
+    },
+    "cta": {
+      "title": "¿Listo para conseguir tu trabajo soñado?",
+      "subtitle": "Únete a miles de profesionales que han impulsado su carrera con ResumeEly.",
+      "getStarted": "Comenzar — Es Gratis",
+      "viewResumes": "Ver Mis CVs"
+    }
+  },
+  "createResume": {
+    "title": "Crea Tu CV Profesional",
+    "subtitle": "Completa tu información para generar un CV optimizado.",
+    "contactInfo": "Información de Contacto",
+    "fullName": "Nombre Completo",
+    "emailAddress": "Dirección de Email",
+    "phoneNumber": "Número de Teléfono",
+    "citizenship": "Ciudadanía",
+    "linkedin": "Perfil de LinkedIn",
+    "github": "Perfil de GitHub",
+    "jobInfo": "Información del Trabajo Objetivo",
+    "jobTitle": "Título del Trabajo Objetivo",
+    "jobDescription": "Descripción del Trabajo",
+    "background": "Tu Experiencia",
+    "experience": "Experiencia Laboral",
+    "skills": "Habilidades Técnicas",
+    "education": "Educación",
+    "templates": "Opciones de Plantilla",
+    "generate": "Generar CV"
+  },
+  "about": {
+    "hero": {
+      "tag": "Sobre Nosotros",
+      "title": "Te ayudamos a <span class=\"text-accent\">conseguir el trabajo de tus sueños</span>",
+      "subtitle": "ResumeEly es una plataforma impulsada por IA que nivela el campo de juego para los buscadores de empleo. Creemos que todos merecen una oportunidad justa en su carrera ideal."
+    },
+    "mission": {
+      "tag": "Nuestra Misión",
+      "title": "Empoderando carreras a través de tecnología inteligente",
+      "p1": "Las solicitudes de empleo tradicionales a menudo dependen en gran medida de lo bien formateado que esté un currículum o de si contiene las palabras clave adecuadas, en lugar de las calificaciones reales del candidato.",
+      "p2": "Nuestra plataforma impulsada por IA nivela el campo de juego ayudando a los buscadores de empleo a crear currículums profesionales y optimizados para ATS que resalten su verdadero potencial y aumenten sus posibilidades de ser notados por los gerentes de contratación.",
+      "p3": "Estamos comprometidos a hacer que el proceso de búsqueda de empleo sea más equitativo, eficiente y exitoso para todos los involucrados.",
+      "stats": {
+        "jobSeekers": "Buscadores de empleo ayudados",
+        "atsPass": "Tasa de aprobación ATS",
+        "interviews": "Más entrevistas"
+      }
+    },
+    "values": {
+      "tag": "Lo Que Creemos",
+      "title": "Nuestros Valores Fundamentales",
+      "desc": "Los principios que guían cada función que construimos y cada decisión que tomamos.",
+      "integrity": {
+        "title": "Integridad",
+        "desc": "Creemos en prácticas honestas y transparentes. Tus datos se mantienen privados, y nuestra IA proporciona análisis veraces y fundamentados de tu currículum."
+      },
+      "innovation": {
+        "title": "Innovación",
+        "desc": "Mejoramos continuamente nuestra tecnología de IA, manteniéndonos a la vanguardia del procesamiento del lenguaje natural para ofrecer los mejores resultados."
+      },
+      "accessibility": {
+        "title": "Accesibilidad",
+        "desc": "Las herramientas profesionales para currículums deben estar disponibles para todos, independientemente de su origen, nivel de experiencia o presupuesto."
+      },
+      "userFirst": {
+        "title": "El Usuario Primero",
+        "desc": "Cada función, cada decisión de diseño y cada modelo de IA que enviamos se evalúa bajo un enfoque: ¿ayuda a nuestros usuarios a tener éxito?"
+      }
+    },
+    "team": {
+      "tag": "Nuestra Gente",
+      "title": "El Equipo Detrás de ResumeEly",
+      "desc": "Un equipo pequeño pero dedicado a construir el futuro de las herramientas profesionales.",
+      "members": {
+        "founder": {
+          "name": "Franklin",
+          "role": "Fundador y Desarrollador Principal",
+          "desc": "Apasionado por crear soluciones de IA que empoderan a las personas en sus trayectorias profesionales."
+        },
+        "ai": {
+          "name": "Asistente de IA",
+          "role": "Socio de Tecnología de IA",
+          "desc": "Inteligencia artificial de vanguardia que impulsa nuestras herramientas de análisis y creación de currículums."
+        },
+        "puter": {
+          "name": "Plataforma Puter",
+          "role": "Socio de Infraestructura",
+          "desc": "Infraestructura en la nube segura y escalable que permite a nuestra plataforma servir a usuarios de todo el mundo."
+        }
+      }
+    },
+    "cta": {
+      "title": "¿Listo para unirte a nuestro viaje?",
+      "subtitle": "Crea tu CV optimizado hoy y da el primer paso hacia la carrera de tus sueños.",
+      "primaryBtn": "Comenzar — Es Gratis",
+      "ghostBtn": "Ver Planes de Precios"
+    }
+  },
+  "pricing": {
+    "title": "Precios simples y <span class=\"text-accent\">transparentes</span>",
+    "subtitle": "Elige el plan que mejor se adapte a tus objetivos profesionales. Todos los planes incluyen nuestras funciones principales de IA.",
+    "monthly": "Mensual",
+    "annual": "Anual",
+    "save20": "Ahorra 20%",
+    "popular": "Más Popular",
+    "faqTitle": "Preguntas Frecuentes",
+    "faqDesc": "Todo lo que necesitas saber sobre nuestros precios y planes.",
+    "ctaTitle": "¿Listo para transformar tu carrera?",
+    "ctaDesc": "Únete a miles de profesionales que han conseguido el trabajo de sus sueños con ResumeEly.",
+    "ctaBtn": "Inicia tu Plan Gratuito",
+    "plans": {
+      "free": {
+        "name": "Gratis",
+        "period": "para siempre",
+        "desc": "Perfecto para comenzar con currículums impulsados por IA.",
+        "f1": "Crea hasta 3 currículums",
+        "f2": "Análisis básico de ATS",
+        "f3": "Descarga en PDF",
+        "f4": "Soporte de la comunidad",
+        "btn": "Empezar Gratis"
+      },
+      "professional": {
+        "name": "Profesional",
+        "periodMoAnn": "por mes, facturación anual",
+        "periodMo": "por mes",
+        "desc": "Ideal para buscadores de empleo serios que necesitan una ventaja.",
+        "f1": "Creación ilimitada de currículums",
+        "f2": "Optimización avanzada de ATS",
+        "f3": "Descarga en formatos PDF y DOC",
+        "f4": "Soporte prioritario por correo electrónico",
+        "f5": "Historial de versiones del currículum",
+        "f6": "Generador de cartas de presentación",
+        "btn": "Iniciar Prueba Gratuita"
+      },
+      "career": {
+        "name": "Crecimiento Profesional",
+        "periodMoAnn": "por mes, facturación anual",
+        "periodMo": "por mes",
+        "desc": "Para cambios de carrera y ejecutivos que lo quieren todo.",
+        "f1": "Todo lo incluido en Profesional",
+        "f2": "Asesoramiento profesional personalizado",
+        "f3": "Optimización de perfil de LinkedIn",
+        "f4": "Materiales de preparación para entrevistas",
+        "f5": "Guía de negociación salarial",
+        "f6": "Asistente profesional dedicado",
+        "btn": "Iniciar Prueba Gratuita"
+      }
+    },
+    "faqs": {
+      "q1": "¿Puedo cambiar de plan en cualquier momento?",
+      "a1": "Sí, puedes mejorar, rebajar o cancelar tu suscripción en cualquier momento. Los cambios se aplican inmediatamente y solo te cobraremos por el tiempo que uses cada plan.",
+      "q2": "¿Ofrecen una prueba gratuita?",
+      "a2": "Todos los planes pagos incluyen una prueba gratuita de 7 días. No se requiere tarjeta de crédito para iniciar la prueba.",
+      "q3": "¿Qué métodos de pago aceptan?",
+      "a3": "Aceptamos todas las principales tarjetas de crédito, incluyendo Visa, Mastercard, American Express y Discover. Para los planes anuales, también ofrecemos facturación y transferencias bancarias.",
+      "q4": "¿Ofrecen descuentos para estudiantes?",
+      "a4": "Sí, ofrecemos precios especiales para estudiantes y organizaciones sin fines de lucro. Comunícate con nuestro equipo de soporte con un comprobante de tu estado para recibir un código de descuento."
+    }
+  },
+  "upload": {
+    "title": "Retroalimentación inteligente para el Trabajo de tus Sueños",
+    "subtitle": "Sube tu currículum para obtener una puntuación ATS y mejoras de IA.",
+    "status": {
+      "uploading": "subiendo el archivo...",
+      "converting": "Convirtiendo a imagen...",
+      "uploadImg": "Subiendo la imagen...",
+      "preparing": "Preparando datos...",
+      "analyzing": "Analizando... Esto puede tomar un momento.",
+      "saving": "Guardando resultados...",
+      "redirecting": "Redirigiendo...",
+      "default": "Analizando ..."
+    },
+    "form": {
+      "company": "Nombre de la Empresa",
+      "companyPh": "Google",
+      "jobTitle": "Título del Trabajo",
+      "jobTitlePh": "Ingeniero de Software",
+      "jobDesc": "Descripción del Trabajo",
+      "jobDescPh": "Pega la descripción del trabajo aquí...",
+      "btn": "Analizar currículum"
+    },
+    "uploader": {
+      "fileSelected": "Archivo seleccionado",
+      "clickUpload": "Haz clic para subir",
+      "dragDrop": " o arrastra y suelta",
+      "maxSize": "tamaño máx de PDF: 20 MB"
+    }
+  },
+  "myResumes": {
+    "title": "Currículums",
+    "subtitle": "Crea, edita y administra tus currículums.",
+    "clearAll": "Borrar Todo",
+    "addResume": "Añadir CV",
+    "edited": "Editado: {{time}}",
+    "openEditor": "Abrir en el Editor",
+    "makeCopy": "Hacer una copia",
+    "downloadPdf": "Descargar PDF",
+    "delete": "Eliminar",
+    "deleteModal": {
+      "title": "¿Eliminar currículum?",
+      "descAll": "¿Seguro que quieres eliminar TODOS tus currículums? Esta acción no se puede deshacer.",
+      "descSingle": "¿Seguro que quieres eliminar este currículum? Esta acción no se puede deshacer.",
+      "confirm": "Sí, Eliminar",
+      "deleting": "Eliminando...",
+      "cancel": "Cancelar"
+    }
+  }
+}

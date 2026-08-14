@@ -1,0 +1,275 @@
+{
+  "navigation": {
+    "title": "RESUME<span class=\"text-blue-600\">E</span>LY",
+    "home": "Accueil",
+    "about": "À propos",
+    "pricing": "Tarifs",
+    "myResumes": "Mes CV",
+    "analyze": "Analyser",
+    "createResume": "Créer un CV"
+  },
+  "home": {
+    "heroBadge": "Plateforme de CV Propulsée par l'IA",
+    "heroTitle": "Créez votre CV parfait ",
+    "heroTyped1": "qui bat les systèmes ATS",
+    "heroTyped2": "adapté à tout emploi",
+    "heroTyped3": "en moins de 2 minutes",
+    "heroTyped4": "propulsé par l'IA",
+    "heroSubtitle": "Créez des CV optimisés pour les ATS, obtenez une analyse instantanée par IA et décrochez des entretiens plus rapidement. Notre plateforme intelligente vous aide à créer le CV parfait pour n'importe quel poste.",
+    "createResumeBtn": "Créer Mon CV",
+    "analyzeBtn": "Analyser un CV Existant",
+    "trustedByText": "Fait confiance à <strong>{{count}}</strong> chercheurs d'emploi",
+    "stats": {
+      "resumesCreated": "CV Créés",
+      "atsPassRate": "Taux de Réussite ATS",
+      "templates": "Modèles Disponibles"
+    },
+    "features": {
+      "title": "Pourquoi utiliser ResumeEly ?",
+      "subtitle": "Tout ce dont vous avez besoin pour créer le CV parfait et décrocher votre emploi de rêve.",
+      "aiBuilder": {
+        "title": "Constructeur de CV par IA",
+        "description": "Générez des CV professionnels optimisés pour les ATS adaptés aux descriptions de poste spécifiques en utilisant une IA avancée."
+      },
+      "atsAnalysis": {
+        "title": "Analyse de Score ATS",
+        "description": "Obtenez une notation et des retours instantanés sur la performance de votre CV contre les Systèmes de Suivi des Candidatures."
+      },
+      "templates": {
+        "title": "Modèles Professionnels",
+        "description": "Choisissez parmi des modèles magnifiquement conçus qui sont éprouvés pour attirer l'attention des recruteurs."
+      },
+      "editor": {
+        "title": "Éditeur en Temps Réel",
+        "description": "Modifiez votre CV avec un aperçu en direct et des suggestions alimentées par IA pour optimiser chaque section."
+      },
+      "export": {
+        "title": "Exportation en Un Clic",
+        "description": "Téléchargez votre CV peaufiné au format PDF ou DOC instantanément, prêt à être soumis aux employeurs."
+      },
+      "personalization": {
+        "title": "Personnalisation Intelligente",
+        "description": "Adaptez automatiquement les mots-clés et formulations de votre CV pour qu'ils correspondent parfaitement à chaque offre d'emploi."
+      }
+    },
+    "howItWorks": {
+      "title": "Comment ça marche",
+      "subtitle": "Passez de zéro à prêt pour l'entretien en trois étapes simples.",
+      "step1": {
+        "title": "Saisissez Vos Informations",
+        "description": "Entrez votre expérience, vos compétences et la description du poste visé. Notre IA s'occupe du reste."
+      },
+      "step2": {
+        "title": "IA Génère et Optimise",
+        "description": "Notre IA crée un CV adapté et compatible ATS avec des mots-clés et un formatage spécifiques à l'industrie."
+      },
+      "step3": {
+        "title": "Téléchargez et Postulez",
+        "description": "Exportez votre CV au format PDF, affinez-le dans notre éditeur et commencez à postuler en toute confiance."
+      }
+    },
+    "cta": {
+      "title": "Prêt à décrocher votre emploi de rêve ?",
+      "subtitle": "Rejoignez des milliers de professionnels qui ont boosté leur carrière avec ResumeEly.",
+      "getStarted": "Commencer — C'est Gratuit",
+      "viewResumes": "Voir Mes CV"
+    }
+  },
+  "createResume": {
+    "title": "Créez Votre CV Professionnel",
+    "subtitle": "Remplissez vos informations pour générer un CV optimisé.",
+    "contactInfo": "Informations de Contact",
+    "fullName": "Nom Complet",
+    "emailAddress": "Adresse Email",
+    "phoneNumber": "Numéro de Téléphone",
+    "citizenship": "Citoyenneté",
+    "linkedin": "Profil LinkedIn",
+    "github": "Profil GitHub",
+    "jobInfo": "Informations sur le Poste Visé",
+    "jobTitle": "Titre du Poste Visé",
+    "jobDescription": "Description du Poste",
+    "background": "Votre Expérience",
+    "experience": "Expérience Professionnelle",
+    "skills": "Compétences Techniques",
+    "education": "Formation",
+    "templates": "Options de Modèle",
+    "generate": "Générer le CV"
+  },
+  "about": {
+    "hero": {
+      "tag": "À Propos",
+      "title": "Nous vous aidons à <span class=\"text-accent\">décrocher l'emploi de vos rêves</span>",
+      "subtitle": "ResumeEly est une plateforme propulsée par l'IA qui uniformise les règles du jeu pour les chercheurs d'emploi. Nous croyons que chacun mérite une chance équitable pour sa carrière idéale."
+    },
+    "mission": {
+      "tag": "Notre Mission",
+      "title": "Renforcer les carrières grâce à la technologie intelligente",
+      "p1": "Les candidatures traditionnelles s'appuient souvent davantage sur la qualité de la mise en forme d'un CV ou sur la présence de mots-clés appropriés, plutôt que sur les qualifications réelles du candidat.",
+      "p2": "Notre plateforme propulsée par l'IA uniformise les règles du jeu en aidant les chercheurs d'emploi à créer des CV professionnels et optimisés pour les ATS, qui mettent en évidence leur véritable potentiel et augmentent leurs chances d'être repérés par les recruteurs.",
+      "p3": "Nous nous engageons à rendre le processus de recherche d'emploi plus équitable, plus efficace et plus réussi pour toutes les parties concernées.",
+      "stats": {
+        "jobSeekers": "Chercheurs d'emploi aidés",
+        "atsPass": "Taux de réussite ATS",
+        "interviews": "Plus d'entretiens"
+      }
+    },
+    "values": {
+      "tag": "Ce Que Nous Croyons",
+      "title": "Nos Valeurs Fondamentales",
+      "desc": "Les principes qui guident chaque fonctionnalité que nous développons et chaque décision que nous prenons.",
+      "integrity": {
+        "title": "Intégrité",
+        "desc": "Nous croyons en des pratiques honnêtes et transparentes. Vos données restent privées, et notre IA fournit une analyse véridique et fondée de votre CV."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "desc": "Nous améliorons continuellement notre technologie d'IA, restant à la pointe du traitement du langage naturel pour fournir les meilleurs résultats."
+      },
+      "accessibility": {
+        "title": "Accessibilité",
+        "desc": "Les outils de CV professionnels devraient être accessibles à tous, indépendamment de leur parcours, de leur niveau d'expérience ou de leur budget."
+      },
+      "userFirst": {
+        "title": "L'Utilisateur d'Abord",
+        "desc": "Chaque fonctionnalité, chaque décision de conception et chaque modèle d'IA que nous publions est évalué selon un seul critère : aide-t-il nos utilisateurs à réussir ?"
+      }
+    },
+    "team": {
+      "tag": "Notre Équipe",
+      "title": "L'Équipe Derrière ResumeEly",
+      "desc": "Une petite équipe dévouée bâtissant l'avenir des outils de carrière.",
+      "members": {
+        "founder": {
+          "name": "Franklin",
+          "role": "Fondateur et Développeur Principal",
+          "desc": "Passionné par la création de solutions d'IA qui responsabilisent les individus dans leur parcours professionnel."
+        },
+        "ai": {
+          "name": "Assistant IA",
+          "role": "Partenaire Technologique IA",
+          "desc": "Une intelligence artificielle de pointe propulsant nos outils d'analyse et de création de CV."
+        },
+        "puter": {
+          "name": "Plateforme Puter",
+          "role": "Partenaire d'Infrastructure",
+          "desc": "Une infrastructure cloud sécurisée et évolutive permettant à notre plateforme de servir des utilisateurs du monde entier."
+        }
+      }
+    },
+    "cta": {
+      "title": "Prêt à rejoindre notre aventure ?",
+      "subtitle": "Créez votre CV optimisé aujourd'hui et faites le premier pas vers votre carrière de rêve.",
+      "primaryBtn": "Commencer — C'est gratuit",
+      "ghostBtn": "Voir les forfaits"
+    }
+  },
+  "pricing": {
+    "title": "Une tarification simple et <span class=\"text-accent\">transparente</span>",
+    "subtitle": "Choisissez le forfait le mieux adapté à vos objectifs professionnels. Tous les forfaits incluent nos fonctionnalités principales propulsées par l'IA.",
+    "monthly": "Mensuel",
+    "annual": "Annuel",
+    "save20": "Économisez 20%",
+    "popular": "Le Plus Populaire",
+    "faqTitle": "Questions Fréquemment Posées",
+    "faqDesc": "Tout ce que vous devez savoir sur nos prix et forfaits.",
+    "ctaTitle": "Prêt à transformer votre carrière ?",
+    "ctaDesc": "Rejoignez des milliers de professionnels qui ont décroché l'emploi de leurs rêves avec ResumeEly.",
+    "ctaBtn": "Commencez Votre Forfait Gratuit",
+    "plans": {
+      "free": {
+        "name": "Gratuit",
+        "period": "pour toujours",
+        "desc": "Parfait pour commencer avec des CV propulsés par l'IA.",
+        "f1": "Créez jusqu'à 3 CVs",
+        "f2": "Analyse ATS de base",
+        "f3": "Télécharger en PDF",
+        "f4": "Support de la communauté",
+        "btn": "Commencez Gratuitement"
+      },
+      "professional": {
+        "name": "Professionnel",
+        "periodMoAnn": "par mois, facturé annuellement",
+        "periodMo": "par mois",
+        "desc": "Idéal pour les chercheurs d'emploi sérieux qui ont besoin de chaque avantage.",
+        "f1": "Création de CV illimitée",
+        "f2": "Optimisation ATS avancée",
+        "f3": "Téléchargement en formats PDF & DOC",
+        "f4": "Support par email prioritaire",
+        "f5": "Historique des versions de CV",
+        "f6": "Générateur de lettre de motivation",
+        "btn": "Démarrer l'essai gratuit"
+      },
+      "career": {
+        "name": "Accélérateur de Carrière",
+        "periodMoAnn": "par mois, facturé annuellement",
+        "periodMo": "par mois",
+        "desc": "Pour les changements de carrière et les cadres qui veulent tout.",
+        "f1": "Tout ce qui est dans Professionnel",
+        "f2": "Coaching de carrière personnalisé",
+        "f3": "Optimisation du profil LinkedIn",
+        "f4": "Matériels de préparation aux entretiens",
+        "f5": "Guide de négociation salariale",
+        "f6": "Conseiller d'orientation dédié",
+        "btn": "Démarrer l'essai gratuit"
+      }
+    },
+    "faqs": {
+      "q1": "Puis-je changer de forfait à tout moment ?",
+      "a1": "Oui, vous pouvez passer à un forfait supérieur, inférieur, ou annuler votre abonnement à tout moment. Les changements prennent effet immédiatement et vous ne serez facturé que pour le temps d'utilisation de chaque forfait.",
+      "q2": "Y a-t-il un essai gratuit ?",
+      "a2": "Tous les forfaits payants s'accompagnent d'un essai gratuit de 7 jours. Aucune carte de crédit requise pour commencer votre essai.",
+      "q3": "Quels modes de paiement acceptez-vous ?",
+      "a3": "Nous acceptons toutes les principales cartes de crédit, y compris Visa, Mastercard, American Express et Discover. Pour les forfaits annuels, nous proposons également la facturation et les virements bancaires.",
+      "q4": "Proposez-vous une réduction pour les étudiants ?",
+      "a4": "Oui, nous offrons des tarifs spéciaux pour les étudiants et les organisations à but non lucratif. Veuillez contacter notre équipe d'assistance avec une preuve de votre statut pour recevoir un code de réduction."
+    }
+  },
+  "upload": {
+    "title": "Des retours intelligents pour le Job de vos rêves",
+    "subtitle": "Déposez votre CV pour un score ATS et des améliorations via l'IA.",
+    "status": {
+      "uploading": "téléchargement du fichier...",
+      "converting": "Conversion en image...",
+      "uploadImg": "Téléchargement de l'image...",
+      "preparing": "Préparation des données...",
+      "analyzing": "Analyse... Cela peut prendre un moment.",
+      "saving": "Sauvegarde des résultats...",
+      "redirecting": "Redirection...",
+      "default": "Analyse en cours ..."
+    },
+    "form": {
+      "company": "Nom de l'entreprise",
+      "companyPh": "Google",
+      "jobTitle": "Titre du poste",
+      "jobTitlePh": "Ingénieur Logiciel",
+      "jobDesc": "Description du poste",
+      "jobDescPh": "Collez la description du poste ici...",
+      "btn": "Analyser le CV"
+    },
+    "uploader": {
+      "fileSelected": "Fichier Sélectionné",
+      "clickUpload": "Cliquez pour Uploader",
+      "dragDrop": " ou glissez-déposez",
+      "maxSize": "taille max du PDF : 20 Mo"
+    }
+  },
+  "myResumes": {
+    "title": "CVs",
+    "subtitle": "Créez, modifiez et gérez vos CVs.",
+    "clearAll": "Tout effacer",
+    "addResume": "Ajouter un CV",
+    "edited": "Modifié : {{time}}",
+    "openEditor": "Ouvrir dans l'Éditeur",
+    "makeCopy": "Faire une copie",
+    "downloadPdf": "Télécharger en PDF",
+    "delete": "Supprimer",
+    "deleteModal": {
+      "title": "Supprimer le CV ?",
+      "descAll": "Êtes-vous sûr de vouloir supprimer TOUS vos CVs ? Cette action ne peut pas être annulée.",
+      "descSingle": "Êtes-vous sûr de vouloir supprimer ce CV ? Cette action ne peut pas être annulée.",
+      "confirm": "Oui, Supprimer",
+      "deleting": "Suppression...",
+      "cancel": "Annuler"
+    }
+  }
+}
