@@ -45,9 +45,10 @@ def signup(request):
             return JsonResponse({"error": "Invalid email address."}, status=400)
         if "password" in lower_msg and ("weak" in lower_msg or "short" in lower_msg or "minimum" in lower_msg):
             return JsonResponse({"error": "Password is too weak. Please use a stronger password."}, status=400)
-        
-        user_error = error_msg if settings.DEBUG else "Signup failed. Please try again."
-        return JsonResponse({"error": user_error}, status=400)
+        if "supabase_url" in lower_msg or "supabase_anon_key" in lower_msg or "must be configured" in lower_msg:
+            return JsonResponse({"error": "Server configuration error: Supabase credentials missing."}, status=500)
+        # Always return real error to help with debugging
+        return JsonResponse({"error": error_msg}, status=400)
 
 
 @csrf_exempt
@@ -73,11 +74,12 @@ def login(request):
             return JsonResponse({"error": "Email not confirmed. Please check your inbox for the confirmation link."}, status=401)
         if "rate limit" in lower_msg or "too many requests" in lower_msg:
             return JsonResponse({"error": "Rate limit exceeded. Please wait a few minutes before trying again."}, status=429)
+        if "supabase_url" in lower_msg or "supabase_anon_key" in lower_msg or "must be configured" in lower_msg:
+            return JsonResponse({"error": "Server configuration error: Supabase credentials missing."}, status=500)
         if "invalid" in lower_msg or "credentials" in lower_msg or "not found" in lower_msg:
             return JsonResponse({"error": "Invalid email or password."}, status=401)
-        
-        user_error = error_msg if settings.DEBUG else "Login failed. Please try again."
-        return JsonResponse({"error": user_error}, status=400)
+        # Always return real error to help with debugging
+        return JsonResponse({"error": error_msg}, status=400)
 
 
 
