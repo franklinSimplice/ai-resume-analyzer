@@ -108,18 +108,18 @@ REST_FRAMEWORK = {
 }
 
 # ---------- NVIDIA AI (primary) ----------
-NVIDIA_API_KEY = os.getenv('NVIDIA_API_KEY', '')
+NVIDIA_API_KEY = os.getenv('NVIDIA_API_KEY', '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')
 NVIDIA_MODEL = os.getenv('NVIDIA_MODEL', 'meta/llama-3.3-70b-instruct')
 NVIDIA_BASE_URL = os.getenv('NVIDIA_BASE_URL', 'https://integrate.api.nvidia.com/v1')
 
 # ---------- Google Gemini (fallback) ----------
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', '')
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', 'AIzaSyDPMhdTl7VNj6sN7llGfMMay_Tlun20xqk')
 GEMINI_MODEL = os.getenv('GEMINI_MODEL', 'gemini-2.0-flash')
 
 # ---------- Supabase ----------
-SUPABASE_URL = os.getenv('SUPABASE_URL', '')
-SUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY', '')
-SUPABASE_SERVICE_ROLE_KEY = os.getenv('SUPABASE_SERVICE_ROLE_KEY', '')
+SUPABASE_URL = os.getenv('SUPABASE_URL', 'https://nbpiavbnhrdevozfhujs.supabase.co')
+SUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5icGlhdmJuaHJkZXZvemZodWpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MTYxNjMsImV4cCI6MjA5MTM5MjE2M30.A8brzBiKcbLkdw3-sALREuoIpQJd1I3zn15rkkynJ6g')
+SUPABASE_SERVICE_ROLE_KEY = os.getenv('SUPABASE_SERVICE_ROLE_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5icGlhdmJuaHJkZXZvemZodWpzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTgxNjE2MywiZXhwIjoyMDkxMzkyMTYzfQ.bTEGvDl2jLmPaBcer3Ot91_RxhfqzG00ETN_YekXiKs')
 
 # ---------- File Upload ----------
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
