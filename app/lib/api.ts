@@ -6,7 +6,13 @@
 import { create } from "zustand";
 
 // ─── Configuration ───
-const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
+export function buildApiUrl(path: string): string {
+  const rawBase = (import.meta.env.VITE_API_URL || "/api").trim();
+  const cleanBase = rawBase.replace(/\/+$/, "");
+  const baseWithApi = cleanBase.endsWith("/api") ? cleanBase : `${cleanBase}/api`;
+  const cleanPath = path.replace(/^\/+/, "");
+  return `${baseWithApi}/${cleanPath}`;
+}
 
 // ─── Types ───
 interface User {
@@ -144,7 +150,7 @@ async function apiFetch(
     headers["Content-Type"] = "application/json";
   }
 
-  let response = await fetch(`${API_BASE_URL}${path}`, {
+  let response = await fetch(buildApiUrl(path), {
     ...options,
     headers,
   });
@@ -154,7 +160,7 @@ async function apiFetch(
     const currentSession = getStoredSession();
     if (currentSession?.refresh_token) {
       try {
-        const refreshRes = await fetch(`${API_BASE_URL}/auth/refresh`, {
+        const refreshRes = await fetch(buildApiUrl("auth/refresh"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ refresh_token: currentSession.refresh_token })
@@ -166,7 +172,7 @@ async function apiFetch(
             storeSession(data.session, data.user);
             // Retry original request with new token
             headers["Authorization"] = `Bearer ${data.session.access_token}`;
-            response = await fetch(`${API_BASE_URL}${path}`, {
+            response = await fetch(buildApiUrl(path), {
               ...options,
               headers,
             });
