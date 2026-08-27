@@ -150,10 +150,23 @@ async function apiFetch(
     headers["Content-Type"] = "application/json";
   }
 
-  let response = await fetch(buildApiUrl(path), {
-    ...options,
-    headers,
-  });
+  const targetUrl = buildApiUrl(path);
+  let response: Response;
+  try {
+    response = await fetch(targetUrl, {
+      ...options,
+      headers,
+    });
+  } catch (err: any) {
+    if (!isRetry) {
+      // Auto-retry once after 2.5 seconds (in case backend is spinning up on Render free tier)
+      await new Promise((r) => setTimeout(r, 2500));
+      return apiFetch(path, options, token, true);
+    }
+    throw new Error(
+      `Unable to reach backend API at ${targetUrl}. Please ensure your backend is live or waking up, then try again.`
+    );
+  }
 
   if (response.status === 401 && !isRetry) {
     // Attempt to refresh token
