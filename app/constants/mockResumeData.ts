@@ -1,33 +1,45 @@
-export const MOCK_RESUME_TEXT = `Name: Jane Doe
-Email: jane.doe@example.com
-Phone: (123) 456-7890
-LinkedIn: https://linkedin.com/in/janedoe
-Github: https://github.com/janedoe
+export const MOCK_RESUME_TEXT = `Jane Doe
+London | (+44)7123123123 | jane.doe@gmail.com
 
-PROFESSIONAL SUMMARY
-Results-driven Senior Software Engineer with over 6 years of experience building scalable web applications and distributed systems. Expert in React, Node.js, and TypeScript, with a proven track record of optimizing application performance and leading high-performing engineering teams.
+CAREER SUMMARY
+Experienced Technology Business Systems Associate with a strong background in computer information technology, specializing in vulnerability tracking, project coordination, and technical support.
 
-WORK EXPERIENCE
-Senior Software Engineer
-TechFlow Solutions, San Francisco, CA
-June 2021 – Present
-- Re-architected a legacy monolith into AWS microservices, reducing server latency by 45% and system cost by 15%.
-- Led a team of 4 engineers to deliver an interactive analytics dashboard, increasing daily active users by 30%.
-- Optimized database indexing and query plans in PostgreSQL, slashing transaction processing times by 60%.
+PROFESSIONAL EXPERIENCE
 
-Software Engineer
-WebSprint Technologies, Austin, TX
-March 2018 – May 2021
-- Developed responsive web interfaces using React and Redux, improving web accessibility and user retention by 20%.
-- Integrated third-party payment APIs (Stripe) and authentication flows, securing transactions for over 100k active users.
-- Automated CI/CD deployment pipelines using GitHub Actions and Docker, accelerating feature release cycles by 35%.
+Company
+City, State
+Technology Business Systems Associate
+June 2021 - June 2023
+• Track vulnerabilities and vulnerability patches for 200+ Windows and Linux based servers using Jira.
+• Incorporate strategies with 5+ engineers to coordinate the resolution of vulnerabilities to avoid further escalation.
+• Create reports using PowerBI to conduct trend analysis for recurring vulnerabilities.
+• Coordinate project plans, schedules and assist with IT technical writing in Confluence.
+• Assist with maintenance of information security policies, standards, guidelines based on compliance requirements.
+
+Company
+City, State
+Loan Documentation Processor
+May 2020 - June 2021
+• Obtained and verified copies of loan applicants credit histories, financial and employment information.
+• Lead virtual training sessions and resolve questions for new Loan Documentation Processors.
+• Calculate income to validate that the borrower qualifies for the mortgage.
+• Support HMCs in helping to complete a correct loan application.
+
+Company
+City, State
+Technical Support Representative
+January 2019 - May 2020
+• Provide fast and efficient customer service to end-users and internal Trimble teams.
+• Deliver advanced technical support on problems of diverse scope.
+• Maintain updated knowledge of company products and services to better provide customer support and service solutions.
 
 EDUCATION
-Stanford University, Stanford, CA
-Master of Science in Computer Science | June 2018
-Relevant Coursework: Advanced Algorithms, Distributed Systems, Software Engineering, Database Systems
 
-SKILLS
-Languages: JavaScript, TypeScript, Python, SQL, HTML/CSS
-Frameworks & Libraries: React, Node.js, Express, Next.js, Redux, Tailwind CSS
-Tools & Cloud: AWS (S3, EC2, Lambda), Docker, Git, CI/CD, PostgreSQL, Redis`;
+University
+City, State
+Bachelor of Science in Computer Information Technology
+August 2019
+
+SKILLS & CERTIFICATIONS
+Skills: Agile, Jira, Confluence, ServiceNow, PowerBI, Python, SQL, Tableau, Microsoft Office and Excel, Critical Thinking, Leadership, Teamwork, Time Management
+Certifications: Microsoft Azure Fundamentals`;

@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router'
 import Navbar from '~/components/Navbar'
 import { useApiStore } from '~/lib/api'
 import { generateResume, formatResumeForStorage, createResumeBlob } from '~/lib/resumeGenerator'
-import { styleResumeContent } from '~/lib/resumeStyler'
+import { styleResumeContent, printResumeAsPdf } from '~/lib/resumeStyler'
 import { RESUME_TEMPLATES } from '~/constants'
 import ResumeEditor from '~/components/Editor/ResumeEditor'
 import { useTranslation } from 'react-i18next'
@@ -219,19 +219,11 @@ function CreateResume() {
             // If it's a fragment (missing <html>), wrap it in a proper document structure
             let contentToPrint = rawContent;
             if (!rawContent.includes('<html')) {
-                contentToPrint = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Resume</title><style>${styleResumeContent(editedResume || '', { theme: template as any }).match(/<style>([\s\S]*?)<\/style>/)?.[1] || ''}</style></head><body>${rawContent}</body></html>`;
+                const styleMatch = styleResumeContent(editedResume || '', { theme: template as any }).match(/<style>([\s\S]*?)<\/style>/)?.[1] || '';
+                contentToPrint = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Resume</title><style>${styleMatch}</style></head><body>${rawContent}</body></html>`;
             }
 
-            const opt = {
-                margin: 0.5,
-                filename: `resume-${new Date().toISOString().slice(0, 10)}.pdf`,
-                image: { type: 'jpeg' as const, quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' as const }
-            };
-
-            const html2pdf = (await import('html2pdf.js')).default;
-            html2pdf().set(opt).from(contentToPrint).save();
+            printResumeAsPdf(contentToPrint);
         } else if (editedResume) {
             const { download } = createResumeBlob(
                 editedResume, 

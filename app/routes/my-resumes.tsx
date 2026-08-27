@@ -4,7 +4,7 @@ import Navbar from '~/components/Navbar'
 import ScoreCircle from '~/components/ScoreCircle'
 import { useApiStore } from '~/lib/api'
 import { createResumeBlob } from '~/lib/resumeGenerator'
-import { styleResumeContent, getResumeFragment } from '~/lib/resumeStyler'
+import { styleResumeContent, getResumeFragment, printResumeAsPdf } from '~/lib/resumeStyler'
 import { useTranslation } from 'react-i18next'
 
 interface GeneratedResume {
@@ -101,22 +101,7 @@ function MyResumes() {
     const handleDownload = (resume: GeneratedResume) => {
         const styledResume = styleResumeContent(resume.resume_content, { theme: resume.template });
         try {
-            const printWindow = window.open('', '_blank');
-            if (printWindow) {
-                printWindow.document.open();
-                printWindow.document.write(`<!DOCTYPE html><html><head><title>Resume</title></head><body>${styledResume}</body></html>`);
-                printWindow.document.close();
-                
-                setTimeout(() => {
-                    printWindow.focus();
-                    printWindow.print();
-                    setTimeout(() => {
-                        printWindow.close();
-                    }, 500);
-                }, 500);
-            } else {
-                alert('Please allow pop-ups to download the PDF.');
-            }
+            printResumeAsPdf(styledResume);
         } catch (error) {
             console.error('Failed to prepare PDF print:', error);
             alert('An error occurred while preparing the PDF document.');

@@ -3,7 +3,7 @@
  * Following exact user-provided formatting and CSS layout
  */
 
-interface StyledResumeOptions {
+export interface StyledResumeOptions {
   theme?: string;
   fontFamily?: string;
   fontSize?: string;
@@ -13,27 +13,27 @@ interface StyledResumeOptions {
   margin?: string;
   fragmentOnly?: boolean;
   layout?: string;
-  /** Dynamic section render order. e.g. ['contact','summary','experience','projects','skills','education'] */
+  /** Dynamic section render order */
   sectionOrder?: string[];
 }
 
-/** Default section order used when none is explicitly provided */
+/** Default section order with PROFESSIONAL EXPERIENCE before EDUCATION */
 export const DEFAULT_SECTION_ORDER: string[] = [
   'contact',
   'summary',
   'experience',
-  'projects',
-  'skills',
   'education',
+  'skills',
+  'projects',
   'leadership',
 ];
 
-/** Per-preset recommended section orders */
+/** Per-preset recommended section orders (all placing EXPERIENCE before EDUCATION) */
 export const PRESET_SECTION_ORDERS: Record<string, string[]> = {
-  professional: ['contact', 'summary', 'experience', 'projects', 'skills', 'education'],
-  modern: ['contact', 'summary', 'skills', 'experience', 'projects', 'education'],
-  executive: ['contact', 'summary', 'projects', 'experience', 'skills', 'education'],
-  software_engineering: ['contact', 'summary', 'experience', 'projects', 'education', 'skills'],
+  professional: ['contact', 'summary', 'experience', 'education', 'skills'],
+  modern: ['contact', 'summary', 'experience', 'education', 'skills'],
+  executive: ['contact', 'summary', 'experience', 'education', 'skills'],
+  software_engineering: ['contact', 'summary', 'experience', 'education', 'skills'],
 };
 
 function resolveOptions(options: StyledResumeOptions = {}): StyledResumeOptions {
@@ -51,7 +51,6 @@ function resolveOptions(options: StyledResumeOptions = {}): StyledResumeOptions 
           lineHeight: parsed.lineHeight,
           margin: parsed.margin,
           fragmentOnly: options.fragmentOnly,
-          // Prefer explicitly passed sectionOrder, fallback to preset, then default
           sectionOrder: options.sectionOrder ||
             (parsed.sectionOrder as string[] | undefined) ||
             PRESET_SECTION_ORDERS[resolvedLayout] ||
@@ -62,7 +61,6 @@ function resolveOptions(options: StyledResumeOptions = {}): StyledResumeOptions 
       // Ignore parsing errors and return options as-is
     }
   }
-  // Populate sectionOrder from preset if not provided
   const layoutKey = options.theme || options.layout || 'professional';
   return {
     ...options,
@@ -91,16 +89,16 @@ export function getResumeFragment(resumeContent: string, options: StyledResumeOp
   `;
 }
 
-function parseResumeContent(content: string) {
+export function parseResumeContent(content: string) {
   const lines = (content || '').split('\n');
   const sections: Record<string, string[]> = {
     contact: [],
     summary: [],
     experience: [],
     education: [],
+    skills: [],
     projects: [],
-    leadership: [],
-    skills: []
+    leadership: []
   };
   
   let currentSection = '';
@@ -109,55 +107,51 @@ function parseResumeContent(content: string) {
     const trimmedLine = line.trim();
     if (!trimmedLine) continue;
     
-    const upperContent = trimmedLine.toUpperCase();
+    // Strip markdown formatting if any
+    const cleanLine = trimmedLine.replace(/^\*\*|\*\*$/g, '').replace(/^#+\s*/, '').trim();
+    const upperContent = cleanLine.toUpperCase();
     
-    // Improved detection with more variants
-    if (upperContent.match(/CONTACT|PERSONAL INFO/)) {
+    // Improved detection with exact section mapping
+    if (upperContent.match(/^CONTACT(\s+INFO|\s+INFORMATION)?$/) || upperContent === 'PERSONAL INFO') {
       currentSection = 'contact';
-    } else if (upperContent.match(/SUMMARY|PROFILE|OBJECTIVE/)) {
+    } else if (upperContent.match(/CAREER SUMMARY|PROFESSIONAL SUMMARY|SUMMARY|OBJECTIVE|PROFILE/)) {
       currentSection = 'summary';
-    } else if (upperContent.match(/EXPERIENCE|WORK HISTORY|EMPLOYMENT/)) {
+    } else if (upperContent.match(/PROFESSIONAL EXPERIENCE|WORK EXPERIENCE|EXPERIENCE|EMPLOYMENT HISTORY|WORK HISTORY/)) {
       currentSection = 'experience';
-    } else if (upperContent.match(/PROJECTS/)) {
+    } else if (upperContent.match(/^EDUCATION(\s+AND\s+TRAINING)?$/) || upperContent === 'ACADEMIC BACKGROUND') {
+      currentSection = 'education';
+    } else if (upperContent.match(/SKILLS\s*(&|AND)?\s*CERTIFICATIONS|SKILLS|TECHNICAL SKILLS|CORE COMPETENCIES|CERTIFICATIONS/)) {
+      currentSection = 'skills';
+    } else if (upperContent.match(/^PROJECTS(\s+AND\s+ACCOMPLISHMENTS)?$/)) {
       currentSection = 'projects';
     } else if (upperContent.match(/LEADERSHIP|ACTIVITIES|VOLUNTEER/)) {
       currentSection = 'leadership';
-    } else if (upperContent.match(/EDUCATION/)) {
-      currentSection = 'education';
-    } else if (upperContent.match(/SKILLS|COMPETENCIES|TECHNOLOGIES/)) {
-      currentSection = 'skills';
     } else {
-      // If we haven't found a section yet, default to summary or the previous one
       if (!currentSection) {
-          // If it looks like a name/contact info but no header was found
-          if (trimmedLine.includes('@') || trimmedLine.match(/\d{3}/)) {
-              currentSection = 'contact';
-          } else {
-              currentSection = 'summary';
-          }
+        if (cleanLine.includes('@') || cleanLine.match(/\+?\d[\d\s-]{7,}\d/)) {
+          currentSection = 'contact';
+        } else {
+          currentSection = 'contact';
+        }
       }
-      sections[currentSection as keyof typeof sections].push(line);
+      sections[currentSection as keyof typeof sections].push(cleanLine);
     }
   }
   
   return sections;
 }
 
-/** Section title labels shown in the rendered resume */
+/** Section title labels matching the clean format */
 const SECTION_TITLES: Record<string, string> = {
   contact: '',
-  summary: 'PROFESSIONAL SUMMARY',
-  experience: 'WORK EXPERIENCE',
-  projects: 'PROJECTS',
-  skills: 'SKILLS',
+  summary: 'CAREER SUMMARY',
+  experience: 'PROFESSIONAL EXPERIENCE',
   education: 'EDUCATION',
+  skills: 'SKILLS & CERTIFICATIONS',
+  projects: 'PROJECTS',
   leadership: 'LEADERSHIP & ACTIVITIES',
 };
 
-/**
- * Dynamically renders resume sections in the order specified by `sectionOrder`.
- * Falls back to DEFAULT_SECTION_ORDER if none is provided.
- */
 function generateLayoutSections(
   sections: Record<string, string[]>,
   sectionOrder?: string[]
@@ -176,16 +170,15 @@ function generateLayoutSections(
           return generateSummarySection(lines, SECTION_TITLES.summary);
         case 'experience':
           return generateExperienceSection(lines, SECTION_TITLES.experience);
-        case 'projects':
-          return generateExperienceSection(lines, SECTION_TITLES.projects);
-        case 'skills':
-          return generateSkillsSection(lines, SECTION_TITLES.skills);
         case 'education':
           return generateEducationSection(lines);
+        case 'skills':
+          return generateSkillsSection(lines, SECTION_TITLES.skills);
+        case 'projects':
+          return generateExperienceSection(lines, SECTION_TITLES.projects);
         case 'leadership':
           return generateExperienceSection(lines, SECTION_TITLES.leadership);
         default:
-          // Unknown section: render as a generic experience block
           return generateExperienceSection(lines, (SECTION_TITLES[key] || key).toUpperCase());
       }
     })
@@ -217,21 +210,43 @@ function generateStyledHtml(sections: Record<string, string[]>, options: StyledR
 
 function generateCss(options: StyledResumeOptions) {
   const { 
-    fontFamily = '"Times New Roman", Times, serif', 
+    fontFamily = '"Times New Roman", Times, Georgia, serif', 
     fontSize = '10pt', 
-    primaryColor = 'black',
-    lineHeight = '1.2',
+    primaryColor = '#000000',
+    lineHeight = '1.25',
     margin = '0.5in'
   } = options;
+
   return `
-/* style.css */
+/* Printable Clean ATS Resume Stylesheet */
+@page {
+    size: letter portrait;
+    margin: 0.4in;
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    font-family: ${fontFamily};
+    color: ${primaryColor};
+}
+
 .resume-container {
-    background-color: white;
-    width: 8.5in; /* Standard Letter Size */
+    background-color: #ffffff;
+    width: 8.5in;
     min-height: 11in;
     padding: ${margin};
     box-sizing: border-box;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     text-align: left;
     font-family: ${fontFamily};
     line-height: ${lineHeight};
@@ -241,61 +256,97 @@ function generateCss(options: StyledResumeOptions) {
 
 .header {
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .header h1 {
-    margin: 0;
-    font-size: 1.8em;
+    margin: 0 0 3px 0;
+    font-size: 1.55em;
+    font-weight: bold;
     text-transform: none;
+    letter-spacing: 0.3px;
+    color: ${primaryColor};
 }
 
 .header p {
-    margin: 5px 0;
-    font-size: 1em;
+    margin: 0;
+    font-size: 0.95em;
+    color: #222222;
+}
+
+.header a {
+    color: inherit;
+    text-decoration: none;
 }
 
 .section-title {
-    font-size: 1.1em;
+    font-size: 1.05em;
     font-weight: bold;
-    border-bottom: 1px solid ${primaryColor};
-    margin: 15px 0 5px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1.5px solid ${primaryColor};
+    margin: 12px 0 6px 0;
     padding-bottom: 2px;
     color: ${primaryColor};
 }
 
-.entry-subheader span,
-.entry-header span {
-    font-weight: bold;
-}
-
 .entry {
-    margin-bottom: 10px;
-}
-
-.entry-header, .entry-subheader {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.05em;
+    margin-bottom: 8px;
 }
 
 .entry-header {
-    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 1em;
+    margin-top: 4px;
+}
+
+.entry-header strong {
+    font-weight: bold;
+}
+
+.entry-header span {
+    font-weight: normal;
+    text-align: right;
+}
+
+.entry-subheader {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.95em;
+    margin-top: 1px;
+    margin-bottom: 3px;
+}
+
+.entry-subheader em {
+    font-style: italic;
+}
+
+.entry-subheader span {
+    font-style: normal;
+    text-align: right;
 }
 
 ul {
-    margin: 5px 0;
-    padding-left: 25px;
+    margin: 3px 0 6px 0;
+    padding-left: 20px;
+    list-style-type: disc;
 }
 
 li {
-    font-size: 1em;
+    font-size: 0.95em;
+    line-height: 1.3;
     margin-bottom: 2px;
+    color: #111111;
 }
 
 p {
-    font-size: 1em;
-    margin: 5px 0;
+    font-size: 0.95em;
+    line-height: 1.3;
+    margin: 3px 0;
+    color: #111111;
 }
 
 a {
@@ -303,14 +354,17 @@ a {
     text-decoration: none;
 }
 
-/* Print-specific styles */
+/* Print-specific styles for real text PDF */
 @media print {
+    body {
+        background-color: transparent !important;
+    }
     .resume-container {
-        width: 100%;
-        min-height: auto;
-        padding: 0;
-        box-shadow: none;
-        margin: 0;
+        width: 100% !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        margin: 0 !important;
     }
 }
 `;
@@ -324,8 +378,20 @@ function generateContactSection(lines: string[]): string {
   
   for (const line of lines) {
     const trimmed = line.trim();
+    if (!trimmed) continue;
+    
     if (trimmed.startsWith('Name:')) {
       name = trimmed.replace('Name:', '').trim();
+    } else if (trimmed.startsWith('Contact:')) {
+      const contactStr = trimmed.replace('Contact:', '').trim();
+      const parts = contactStr.split('|').map(p => p.trim()).filter(Boolean);
+      for (const p of parts) {
+        if (p.includes('@')) {
+          meta.push(`<a href="mailto:${p}">${p}</a>`);
+        } else {
+          meta.push(p);
+        }
+      }
     } else if (trimmed.startsWith('Email:')) {
       const em = trimmed.replace('Email:', '').trim();
       meta.push(`<a href="mailto:${em}">${em}</a>`);
@@ -333,33 +399,39 @@ function generateContactSection(lines: string[]): string {
       meta.push(trimmed.replace('Phone:', '').trim());
     } else if (trimmed.startsWith('LinkedIn:')) {
       const link = trimmed.replace('LinkedIn:', '').trim();
-      meta.push(`<a href="${link}">LinkedIn: ${link.split('/').pop() || 'Profile'}</a>`);
-    } else if (trimmed.startsWith('Github:')) {
-      const link = trimmed.replace('Github:', '').trim();
-      meta.push(`<a href="${link}">GitHub: ${link.split('/').pop() || 'Profile'}</a>`);
-    } else if (trimmed !== '') {
-      meta.push(trimmed);
+      meta.push(link);
+    } else if (trimmed.startsWith('GitHub:') || trimmed.startsWith('Github:')) {
+      const link = trimmed.replace(/Github:/i, '').trim();
+      meta.push(link);
+    } else if (trimmed.includes('|')) {
+      const parts = trimmed.split('|').map(p => p.trim()).filter(Boolean);
+      for (const p of parts) {
+        if (p.includes('@')) {
+          meta.push(`<a href="mailto:${p}">${p}</a>`);
+        } else {
+          meta.push(p);
+        }
+      }
+    } else {
+      if (!name) {
+        name = trimmed;
+      } else {
+        meta.push(trimmed);
+      }
     }
   }
 
-  // Fallback for name if it wasn't named explicitly
-  if (!name && lines.length > 0 && !lines[0].includes(':')) {
-    name = lines[0];
-  }
-  
-  if (!name) name = 'FirstName M. LastName';
+  if (!name) name = 'Jane Doe';
   
   return `
         <header class="header">
             <h1>${name}</h1>
-            <p>
-                ${meta.join(' | ')}
-            </p>
+            <p>${meta.join(' | ')}</p>
         </header>
   `;
 }
 
-function generateSummarySection(lines: string[], title: string = 'PROFESSIONAL SUMMARY'): string {
+function generateSummarySection(lines: string[], title: string = 'CAREER SUMMARY'): string {
   if (lines.length === 0) return '';
   const summaryText = lines.map(l => l.trim()).filter(Boolean).join(' ');
   
@@ -379,18 +451,18 @@ function parseEntryBlock(lines: string[]) {
     const line = lines[i].trim();
     if (!line) continue;
     
-    const isBullet = line.startsWith('-') || line.startsWith('•');
+    const isBullet = line.startsWith('-') || line.startsWith('•') || line.startsWith('*');
     
     if (!isBullet) {
-        const hasBullets = currentItem.some(l => l.startsWith('-') || l.startsWith('•'));
-        if (hasBullets) {
-            items.push(currentItem);
-            currentItem = [line];
-        } else {
-            currentItem.push(line);
-        }
-    } else {
+      const hasBullets = currentItem.some(l => l.startsWith('-') || l.startsWith('•') || l.startsWith('*'));
+      if (hasBullets) {
+        items.push(currentItem);
+        currentItem = [line];
+      } else {
         currentItem.push(line);
+      }
+    } else {
+      currentItem.push(line);
     }
   }
   
@@ -407,52 +479,52 @@ function generateExperienceSection(lines: string[], title: string): string {
   if (items.length === 0) return '';
   
   const itemsHtml = items.map(item => {
-    let leftHeader = '';
-    let rightHeader = '';
-    let leftSub = '';
-    let rightSub = '';
+    let company = '';
+    let location = '';
+    let jobTitle = '';
+    let dates = '';
     
-    const metaLines = item.filter(l => !l.startsWith('-') && !l.startsWith('•'));
-    const bullets = item.filter(l => l.startsWith('-') || l.startsWith('•')).map(l => l.replace(/^[-•]\s*/, ''));
+    const metaLines = item.filter(l => !l.startsWith('-') && !l.startsWith('•') && !l.startsWith('*'));
+    const bullets = item
+      .filter(l => l.startsWith('-') || l.startsWith('•') || l.startsWith('*'))
+      .map(l => l.replace(/^[-•*]\s*/, '').trim());
     
-    if (metaLines.length >= 1) leftHeader = metaLines[0];
+    if (metaLines.length >= 1) company = metaLines[0];
     
-    // Track which meta lines are used as headers
-    const usedIndices = new Set<number>([0]); // index 0 is leftHeader
+    const usedIndices = new Set<number>([0]);
     
     for (let i = 1; i < metaLines.length; i++) {
-        const line = metaLines[i];
-        if (line.match(/\d{4}/) || line.includes('Present') || line.includes('Current')) {
-            rightSub = line;
-            usedIndices.add(i);
-        } else if (line.includes(',') && !leftSub) {
-            rightHeader = line;
-            usedIndices.add(i);
-        } else if (!leftSub) {
-            leftSub = line;
-            usedIndices.add(i);
-        } else if (!rightHeader) {
-            rightHeader = line;
-            usedIndices.add(i);
-        }
+      const line = metaLines[i];
+      if (line.match(/\d{4}/) || line.includes('Present') || line.includes('Current')) {
+        dates = line;
+        usedIndices.add(i);
+      } else if (line.includes(',') && !location) {
+        location = line;
+        usedIndices.add(i);
+      } else if (!jobTitle) {
+        jobTitle = line;
+        usedIndices.add(i);
+      } else if (!location) {
+        location = line;
+        usedIndices.add(i);
+      }
     }
     
-    // Any remaining meta lines that weren't used as headers are accomplishments — add as bullets
     for (let i = 1; i < metaLines.length; i++) {
-        if (!usedIndices.has(i)) {
-            bullets.push(metaLines[i].trim());
-        }
+      if (!usedIndices.has(i)) {
+        bullets.push(metaLines[i].trim());
+      }
     }
 
     return `
             <div class="entry">
                 <div class="entry-header">
-                    <strong>${leftHeader}</strong>
-                    <span>${rightHeader}</span>
+                    <strong>${company}</strong>
+                    <span>${location}</span>
                 </div>
-                ${leftSub || rightSub ? `<div class="entry-subheader">
-                    <em>${leftSub}</em>
-                    <span>${rightSub}</span>
+                ${jobTitle || dates ? `<div class="entry-subheader">
+                    <em>${jobTitle}</em>
+                    <span>${dates}</span>
                 </div>` : ''}
                 ${bullets.length > 0 ? `<ul>
                     ${bullets.map(b => `<li>${b}</li>`).join('\n')}
@@ -478,21 +550,23 @@ function generateEducationSection(lines: string[]): string {
     let degree = '';
     let dates = '';
     
-    const metaLines = item.filter(l => !l.startsWith('-') && !l.startsWith('•'));
-    const bullets = item.filter(l => l.startsWith('-') || l.startsWith('•')).map(l => l.replace(/^[-•]\s*/, ''));
+    const metaLines = item.filter(l => !l.startsWith('-') && !l.startsWith('•') && !l.startsWith('*'));
+    const bullets = item
+      .filter(l => l.startsWith('-') || l.startsWith('•') || l.startsWith('*'))
+      .map(l => l.replace(/^[-•*]\s*/, '').trim());
     
     if (metaLines.length >= 1) school = metaLines[0];
     
     for (let i = 1; i < metaLines.length; i++) {
       const line = metaLines[i];
-      if (line.match(/\d{4}/) || line.includes('Graduation')) {
-          dates = line;
-      } else if (line.includes('B.S.') || line.includes('Degree') || line.includes('Master') || line.includes('Bachelor') || line.includes('B.A.')) {
-          degree = line;
+      if (line.match(/\d{4}/) || line.includes('Graduation') || line.includes('Expected')) {
+        dates = line;
+      } else if (line.includes('Bachelor') || line.includes('Master') || line.includes('B.S.') || line.includes('B.A.') || line.includes('Degree') || line.includes('Ph.D') || line.includes('Associate')) {
+        degree = line;
       } else if (line.includes(',')) {
-          location = line;
+        location = line;
       } else if (!degree) {
-          degree = line;
+        degree = line;
       }
     }
     
@@ -520,19 +594,22 @@ function generateEducationSection(lines: string[]): string {
   `;
 }
 
-function generateSkillsSection(lines: string[], title: string = 'SKILLS'): string {
+function generateSkillsSection(lines: string[], title: string = 'SKILLS & CERTIFICATIONS'): string {
   if (lines.length === 0) return '';
   
   const skillList: string[] = [];
   
   for (const line of lines) {
-    if (line.includes(':')) {
-       const parts = line.split(':');
-       const category = parts[0];
-       const items = parts.slice(1).join(':');
-       skillList.push(`<p><strong>${category.trim().replace(/^-/, '').trim()}:</strong> ${(items || '').trim()}</p>`);
+    const trimmed = line.replace(/^[-•*]\s*/, '').trim();
+    if (!trimmed) continue;
+    
+    if (trimmed.includes(':')) {
+      const colonIndex = trimmed.indexOf(':');
+      const category = trimmed.substring(0, colonIndex).trim();
+      const items = trimmed.substring(colonIndex + 1).trim();
+      skillList.push(`<p><strong>${category}:</strong> ${items}</p>`);
     } else {
-       skillList.push(`<p>${line.replace(/^-/, '').trim()}</p>`);
+      skillList.push(`<p>${trimmed}</p>`);
     }
   }
   
@@ -544,9 +621,35 @@ function generateSkillsSection(lines: string[], title: string = 'SKILLS'): strin
   `;
 }
 
-export function convertHtmlToPdf(htmlContent: string): Promise<Blob> {
-  return new Promise((resolve) => {
-    const blob = new Blob([htmlContent], { type: 'text/html' });
-    resolve(blob);
-  });
+/**
+ * Native print-to-PDF utility that triggers the browser print dialog
+ * Generating a 100% vector, real text-based PDF suitable for ATS scanners.
+ */
+export function printResumeAsPdf(htmlContent: string) {
+  const iframe = document.createElement('iframe');
+  iframe.style.position = 'fixed';
+  iframe.style.right = '0';
+  iframe.style.bottom = '0';
+  iframe.style.width = '0';
+  iframe.style.height = '0';
+  iframe.style.border = '0';
+  document.body.appendChild(iframe);
+
+  const doc = iframe.contentWindow?.document;
+  if (!doc) {
+    window.print();
+    return;
+  }
+
+  doc.open();
+  doc.write(htmlContent);
+  doc.close();
+
+  iframe.contentWindow?.focus();
+  setTimeout(() => {
+    iframe.contentWindow?.print();
+    setTimeout(() => {
+      document.body.removeChild(iframe);
+    }, 1000);
+  }, 350);
 }

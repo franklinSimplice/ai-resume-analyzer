@@ -115,16 +115,22 @@ const ResumeEditor = ({ initialContent, template, onSave, onDownload, onBack }: 
     setStyledHtml(html);
   }, [sections, localTemplate, styling, sectionOrder]);
 
+  const SECTION_MAP: Record<string, string> = {
+    'Personal Info': 'contact',
+    'Contact Information': 'contact',
+    'Career Summary': 'summary',
+    'Professional Summary/Objective': 'summary',
+    'Professional Experience': 'experience',
+    'Work Experience': 'experience',
+    'Education': 'education',
+    'Skills & Certifications': 'skills',
+    'Skills': 'skills',
+    'Projects': 'projects',
+    'Leadership & Activities': 'leadership'
+  };
+
   const handleUpdateSection = (displayName: string, value: string) => {
-    const keyMap: Record<string, string> = {
-      'Personal Info': 'contact',
-      'Professional Summary/Objective': 'summary',
-      'Work Experience': 'experience',
-      'Skills': 'skills',
-      'Education': 'education'
-    };
-    
-    const key = keyMap[displayName];
+    const key = SECTION_MAP[displayName];
     if (key) {
       setSections(prev => ({
         ...prev,
@@ -133,16 +139,7 @@ const ResumeEditor = ({ initialContent, template, onSave, onDownload, onBack }: 
     }
   };
 
-  const currentSectionKey = (() => {
-    const keyMap: Record<string, string> = {
-      'Personal Info': 'contact',
-      'Professional Summary/Objective': 'summary',
-      'Work Experience': 'experience',
-      'Skills': 'skills',
-      'Education': 'education'
-    };
-    return keyMap[activeSection] || 'contact';
-  })();
+  const currentSectionKey = SECTION_MAP[activeSection] || 'contact';
 
   const handleAISuggestion = async (suggestion: string) => {
     const currentText = sections[currentSectionKey]?.join('\n') || '';
@@ -165,11 +162,11 @@ const ResumeEditor = ({ initialContent, template, onSave, onDownload, onBack }: 
   /** Maps internal section keys → sidebar-friendly display names */
   const SECTION_DISPLAY_NAMES: Record<string, string> = {
     contact: 'Personal Info',
-    summary: 'Professional Summary/Objective',
-    experience: 'Work Experience',
-    projects: 'Projects',
-    skills: 'Skills',
+    summary: 'Career Summary',
+    experience: 'Professional Experience',
     education: 'Education',
+    skills: 'Skills & Certifications',
+    projects: 'Projects',
     leadership: 'Leadership & Activities',
   };
 
@@ -189,10 +186,10 @@ const ResumeEditor = ({ initialContent, template, onSave, onDownload, onBack }: 
         onModeChange={setMode}
         sections={orderedSidebarSections.length > 0 ? orderedSidebarSections : [
           'Personal Info',
-          'Professional Summary/Objective',
-          'Work Experience',
-          'Skills',
+          'Career Summary',
+          'Professional Experience',
           'Education',
+          'Skills & Certifications',
         ]}
       />
       
