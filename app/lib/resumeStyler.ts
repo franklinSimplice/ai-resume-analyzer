@@ -105,34 +105,70 @@ export function parseResumeContent(content: string) {
   
   for (const line of lines) {
     const trimmedLine = line.trim();
-    if (!trimmedLine) continue;
+    if (!trimmedLine || trimmedLine === '---' || trimmedLine === '***' || trimmedLine === '___') continue;
     
-    // Strip markdown formatting if any
-    const cleanLine = trimmedLine.replace(/^\*\*|\*\*$/g, '').replace(/^#+\s*/, '').trim();
-    const upperContent = cleanLine.toUpperCase();
+    // Strip markdown formatting symbols
+    const cleanLine = trimmedLine
+      .replace(/^[#\*\-_\s>]+/, '')
+      .replace(/[#\*\-_]+$/, '')
+      .trim();
+
+    // Normalized heading for robust section detection
+    const normalized = cleanLine
+      .replace(/^\d+[\.\)]\s*/, '') // remove leading "1. ", "2) "
+      .replace(/[:\-–—]+$/, '')     // remove trailing colons/dashes
+      .trim()
+      .toUpperCase();
     
-    // Improved detection with exact section mapping
-    if (upperContent.match(/^CONTACT(\s+INFO|\s+INFORMATION)?$/) || upperContent === 'PERSONAL INFO') {
+    // Comprehensive section matching
+    if (normalized.match(/^CONTACT(\s+INFO|\s+INFORMATION)?$/) || normalized === 'PERSONAL INFO' || normalized === 'CONTACT') {
       currentSection = 'contact';
-    } else if (upperContent.match(/CAREER SUMMARY|PROFESSIONAL SUMMARY|SUMMARY|OBJECTIVE|PROFILE/)) {
+    } else if (
+      normalized.includes('CAREER SUMMARY') ||
+      normalized.includes('PROFESSIONAL SUMMARY') ||
+      normalized.includes('EXECUTIVE SUMMARY') ||
+      normalized === 'SUMMARY' ||
+      normalized.includes('PROFILE') ||
+      normalized.includes('OBJECTIVE')
+    ) {
       currentSection = 'summary';
-    } else if (upperContent.match(/PROFESSIONAL EXPERIENCE|WORK EXPERIENCE|EXPERIENCE|EMPLOYMENT HISTORY|WORK HISTORY/)) {
+    } else if (
+      normalized.includes('PROFESSIONAL EXPERIENCE') ||
+      normalized.includes('WORK EXPERIENCE') ||
+      normalized.includes('EMPLOYMENT HISTORY') ||
+      normalized.includes('WORK HISTORY') ||
+      normalized === 'EXPERIENCE' ||
+      normalized.includes('KEY EXPERIENCE')
+    ) {
       currentSection = 'experience';
-    } else if (upperContent.match(/^EDUCATION(\s+AND\s+TRAINING)?$/) || upperContent === 'ACADEMIC BACKGROUND') {
+    } else if (
+      normalized.includes('EDUCATION') ||
+      normalized.includes('ACADEMIC BACKGROUND') ||
+      normalized.includes('ACADEMIC QUALIFICATIONS')
+    ) {
       currentSection = 'education';
-    } else if (upperContent.match(/SKILLS\s*(&|AND)?\s*CERTIFICATIONS|SKILLS|TECHNICAL SKILLS|CORE COMPETENCIES|CERTIFICATIONS/)) {
+    } else if (
+      normalized.includes('SKILL') ||
+      normalized.includes('CORE COMPETENCIES') ||
+      normalized.includes('TECHNICAL EXPERTISE') ||
+      normalized.includes('CERTIFICATION') ||
+      normalized.includes('AREAS OF EXPERTISE')
+    ) {
       currentSection = 'skills';
-    } else if (upperContent.match(/^PROJECTS(\s+AND\s+ACCOMPLISHMENTS)?$/)) {
+    } else if (
+      normalized.includes('PROJECT') ||
+      normalized.includes('ACCOMPLISHMENT')
+    ) {
       currentSection = 'projects';
-    } else if (upperContent.match(/LEADERSHIP|ACTIVITIES|VOLUNTEER/)) {
+    } else if (
+      normalized.includes('LEADERSHIP') ||
+      normalized.includes('ACTIVITIES') ||
+      normalized.includes('VOLUNTEER')
+    ) {
       currentSection = 'leadership';
     } else {
       if (!currentSection) {
-        if (cleanLine.includes('@') || cleanLine.match(/\+?\d[\d\s-]{7,}\d/)) {
-          currentSection = 'contact';
-        } else {
-          currentSection = 'contact';
-        }
+        currentSection = 'contact';
       }
       sections[currentSection as keyof typeof sections].push(cleanLine);
     }
@@ -601,12 +637,28 @@ function generateSkillsSection(lines: string[], title: string = 'SKILLS & CERTIF
   
   for (const line of lines) {
     const trimmed = line.replace(/^[-•*]\s*/, '').trim();
-    if (!trimmed) continue;
+    if (!trimmed || trimmed === '---' || trimmed.startsWith('| ---') || trimmed === '|---|---|') continue;
     
+    // Handle markdown table rows: | Category | Skills |
+    if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+      const cells = trimmed
+        .split('|')
+        .map(c => c.replace(/^\*\*|\*\*$/g, '').trim())
+        .filter(Boolean);
+      
+      if (cells.length >= 2 && cells[0].toLowerCase() !== 'category') {
+        skillList.push(`<p><strong>${cells[0]}:</strong> ${cells.slice(1).join(', ')}</p>`);
+        continue;
+      } else if (cells.length === 1) {
+        skillList.push(`<p>${cells[0]}</p>`);
+        continue;
+      }
+    }
+
     if (trimmed.includes(':')) {
       const colonIndex = trimmed.indexOf(':');
-      const category = trimmed.substring(0, colonIndex).trim();
-      const items = trimmed.substring(colonIndex + 1).trim();
+      const category = trimmed.substring(0, colonIndex).replace(/^\*\*|\*\*$/g, '').trim();
+      const items = trimmed.substring(colonIndex + 1).replace(/^\*\*|\*\*$/g, '').trim();
       skillList.push(`<p><strong>${category}:</strong> ${items}</p>`);
     } else {
       skillList.push(`<p>${trimmed}</p>`);

@@ -181,47 +181,58 @@ class NvidiaAIService:
         github = extract_val(r"GitHub:\s*(.+)")
         citizenship = extract_val(r"Citizenship:\s*(.+)")
 
-        contact_lines = [f"# {name}"]
         contact_sub = []
-        if email: contact_sub.append(f"Email: {email}")
-        if phone: contact_sub.append(f"Phone: {phone}")
-        if citizenship: contact_sub.append(f"Citizenship: {citizenship}")
-        if linkedin: contact_sub.append(f"LinkedIn: {linkedin}")
-        if github: contact_sub.append(f"GitHub: {github}")
+        if phone: contact_sub.append(phone)
+        if email: contact_sub.append(email)
+        if linkedin: contact_sub.append(linkedin)
+        if github: contact_sub.append(github)
+        if citizenship: contact_sub.append(citizenship)
 
-        if contact_sub:
-            contact_lines.append(" | ".join(contact_sub))
-
-        sections = ["\n".join(contact_lines)]
-
-        sections.append(
-            "\n## Professional Summary\n"
-            "Results-driven professional with strong technical expertise, proven problem-solving abilities, "
-            "and a track record of delivering impactful solutions aligned with industry best practices."
-        )
+        sections = [
+            f"Name: {name}",
+            f"Contact: {' | '.join(contact_sub) if contact_sub else 'Contact Information'}",
+            "",
+            "CAREER SUMMARY",
+            "Results-driven professional with strong technical expertise, proven problem-solving abilities, and a track record of delivering impactful solutions aligned with industry best practices."
+        ]
 
         # Extract Experience
         exp_match = re.search(r"Experience[:\n]+([\s\S]*?)(?=\n\s*(?:Skills|Education|Template|CRITICAL)|$)", prompt, re.IGNORECASE)
         if exp_match and exp_match.group(1).strip():
-            sections.append(f"\n## Work Experience\n{exp_match.group(1).strip()}")
+            sections.extend(["", "PROFESSIONAL EXPERIENCE", exp_match.group(1).strip()])
         else:
-            sections.append(
-                "\n## Work Experience\n"
-                "### Senior Specialist\n"
-                "- Led development and optimization of high-impact technical projects.\n"
-                "- Collaborated with cross-functional teams to deliver scalable, reliable solutions.\n"
-                "- Reduced operational complexity and improved workflow efficiency."
-            )
+            sections.extend([
+                "",
+                "PROFESSIONAL EXPERIENCE",
+                "Senior Specialist",
+                "City, State",
+                "Specialist Role",
+                "2022 - Present",
+                "• Led development and optimization of high-impact technical projects.",
+                "• Collaborated with cross-functional teams to deliver scalable, reliable solutions.",
+                "• Reduced operational complexity and improved workflow efficiency."
+            ])
+
+        # Extract Education
+        edu_match = re.search(r"Education[:\n]+([\s\S]*?)(?=\n\s*(?:Template|CRITICAL|Skills)|$)", prompt, re.IGNORECASE)
+        if edu_match and edu_match.group(1).strip():
+            sections.extend(["", "EDUCATION", edu_match.group(1).strip()])
+        else:
+            sections.extend([
+                "",
+                "EDUCATION",
+                "University Name",
+                "City, State",
+                "Bachelor of Science",
+                "2022"
+            ])
 
         # Extract Skills
         skills_match = re.search(r"Skills[:\n]+([\s\S]*?)(?=\n\s*(?:Education|Template|CRITICAL)|$)", prompt, re.IGNORECASE)
         if skills_match and skills_match.group(1).strip():
-            sections.append(f"\n## Technical & Professional Skills\n{skills_match.group(1).strip()}")
-
-        # Extract Education
-        edu_match = re.search(r"Education[:\n]+([\s\S]*?)(?=\n\s*(?:Template|CRITICAL)|$)", prompt, re.IGNORECASE)
-        if edu_match and edu_match.group(1).strip():
-            sections.append(f"\n## Education & Credentials\n{edu_match.group(1).strip()}")
+            sections.extend(["", "SKILLS & CERTIFICATIONS", f"Skills: {skills_match.group(1).strip()}"])
+        else:
+            sections.extend(["", "SKILLS & CERTIFICATIONS", "Skills: Core Technical Skills, Problem Solving, Communication, Project Management"])
 
         return "\n\n".join(sections)
 
@@ -400,7 +411,17 @@ class NvidiaAIService:
         messages = [
             {
                 "role": "system",
-                "content": "You are an expert resume writer specializing in ATS-optimized resumes. Generate professional, well-structured resumes that pass Applicant Tracking Systems."
+                "content": (
+                    "You are an expert ATS resume writer. "
+                    "You MUST ALWAYS generate a complete resume containing ALL 5 sections without exception:\n"
+                    "1. Name and Contact Info\n"
+                    "2. CAREER SUMMARY\n"
+                    "3. PROFESSIONAL EXPERIENCE\n"
+                    "4. EDUCATION\n"
+                    "5. SKILLS & CERTIFICATIONS\n\n"
+                    "CRITICAL: Never omit CAREER SUMMARY or SKILLS & CERTIFICATIONS. "
+                    "Every single resume must include all 5 sections. Output in clean plain text following the exact uppercase section headers."
+                )
             },
             {
                 "role": "user",
