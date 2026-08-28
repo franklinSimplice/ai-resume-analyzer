@@ -17,6 +17,12 @@ function Upload() {
     const [status_text, setStatus_text] = useState('')
     const [file, setFile] = useState<File | null>(null)
 
+    React.useEffect(() => {
+        if (!auth.isAuthenticated) {
+            navigate('/auth')
+        }
+    }, [auth.isAuthenticated, navigate])
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
