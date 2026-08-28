@@ -1,13 +1,22 @@
 // Resume templates and generation prompts for ATS optimization
 
 const STANDARD_ATS_FORMAT_INSTRUCTIONS = `
-Follow this EXACT visual structure:
+WRITING & GENERATION GUIDELINES (MANDATORY):
+1. COMPLETELY DYNAMIC & TAILORED AI WRITING:
+   - You MUST write authentic, original, high-impact resume content tailored specifically to the candidate's background and the target job description.
+   - NEVER output generic placeholder text or repeat fixed template sentences across different candidates.
+   - In the CAREER SUMMARY, craft 2-3 engaging, powerful sentences summarizing the candidate's distinct expertise, technical strengths, and value proposition for the target role.
+   - For every role in PROFESSIONAL EXPERIENCE, expand the user's input into strong bullet points using the STAR method (Action Verb + Technical Context + Quantified Business/Engineering Impact).
+   - Categorize the SKILLS logically (e.g. Languages, Frameworks, Cloud & Tools, Methodologies).
+
+2. REQUIRED SECTION STRUCTURE & PLAIN TEXT LAYOUT:
+   Generate the resume in clean plain text matching this visual hierarchy so our layout engine can style font size, alignment, and spacing:
 
 Name: [Candidate Full Name]
 Contact: [City, State] | [Phone Number] | [Email Address] | [LinkedIn URL]
 
 CAREER SUMMARY
-[Concise 2-3 sentence career summary highlighting core expertise, background, domain experience, and key value proposition.]
+[Dynamic, tailored 2-3 sentence career summary crafted by AI for this candidate and target job.]
 
 PROFESSIONAL EXPERIENCE
 
@@ -15,27 +24,20 @@ PROFESSIONAL EXPERIENCE
 [City, State]
 [Job Title]
 [Start Date] - [End Date]
-• [Action verb + achievement with quantified impact and metrics]
-• [Action verb + technical responsibility and tools used]
-• [Action verb + problem solved, system scaled, or project delivered]
-
-[Previous Company Name]
-[City, State]
-[Previous Job Title]
-[Start Date] - [End Date]
-• [Action verb + achievement with quantified metrics]
-• [Action verb + key responsibility and outcomes]
+• [Dynamic AI-written achievement bullet point with action verb and quantified outcome]
+• [Dynamic AI-written technical execution bullet point with tools and responsibilities]
+• [Dynamic AI-written problem solved or system scaled]
 
 EDUCATION
 
 [University Name]
 [City, State]
-[Degree Name, e.g. Bachelor of Science in Computer Information Technology]
-[Graduation Date, e.g. August 2019]
+[Degree Name, e.g. Bachelor of Science in Computer Science]
+[Graduation Date, e.g. May 2021]
 
 SKILLS & CERTIFICATIONS
-Skills: [Categorized skills, e.g. Core Skills, Languages, Frameworks, Tools, Soft Skills separated by commas]
-Certifications: [Relevant certifications separated by commas, or omit if none]
+Skills: [Categorized technical and professional skills separated by category and commas]
+Certifications: [Relevant certifications, or omit if none]
 
 Formatting Rules:
 1. Always put PROFESSIONAL EXPERIENCE before EDUCATION.

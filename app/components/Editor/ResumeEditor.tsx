@@ -3,7 +3,7 @@ import EditorSidebarLeft from './EditorSidebarLeft';
 import EditorCanvas from './EditorCanvas';
 import EditorSidebarRight from './EditorSidebarRight';
 import CustomizerStudio from '~/components/Templates/CustomizerStudio';
-import { styleResumeContent, getResumeFragment, PRESET_SECTION_ORDERS, DEFAULT_SECTION_ORDER } from '~/lib/resumeStyler';
+import { styleResumeContent, getResumeFragment, parseResumeContent, PRESET_SECTION_ORDERS, DEFAULT_SECTION_ORDER } from '~/lib/resumeStyler';
 import { useApiStore } from '~/lib/api';
 
 interface ResumeEditorProps {
@@ -72,32 +72,11 @@ const ResumeEditor = ({ initialContent, template, onSave, onDownload, onBack }: 
     }
   }, [template]);
 
-  // Initial parse of the AI content
+  // Initial parse of the AI content using the unified robust parser
   useEffect(() => {
     if (initialContent) {
-      // Basic parser logic similar to resumeStyler
-      const lines = initialContent.split('\n');
-      const newSections: Record<string, string[]> = {
-        contact: [],
-        summary: [],
-        experience: [],
-        education: [],
-        skills: []
-      };
-      
-      let currentKey = '';
-      for (const line of lines) {
-        const trimmed = line.trim();
-        if (!trimmed) continue;
-        const upper = trimmed.toUpperCase();
-        if (upper.includes('CONTACT')) currentKey = 'contact';
-        else if (upper.includes('SUMMARY')) currentKey = 'summary';
-        else if (upper.includes('EXPERIENCE')) currentKey = 'experience';
-        else if (upper.includes('EDUCATION')) currentKey = 'education';
-        else if (upper.includes('SKILLS')) currentKey = 'skills';
-        else if (currentKey) newSections[currentKey].push(line);
-      }
-      setSections(newSections);
+      const parsedSections = parseResumeContent(initialContent);
+      setSections(parsedSections);
     }
   }, [initialContent]);
 

@@ -109,7 +109,7 @@ REST_FRAMEWORK = {
 
 # ---------- NVIDIA AI (primary) ----------
 NVIDIA_API_KEY = os.getenv('NVIDIA_API_KEY') or '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'
-NVIDIA_MODEL = os.getenv('NVIDIA_MODEL') or 'meta/llama-3.3-70b-instruct'
+NVIDIA_MODEL = os.getenv('NVIDIA_MODEL') or 'minimaxai/minimax-m3'
 NVIDIA_BASE_URL = os.getenv('NVIDIA_BASE_URL') or 'https://integrate.api.nvidia.com/v1'
 
 # ---------- Google Gemini (fallback) ----------

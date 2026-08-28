@@ -13,42 +13,82 @@ logger = logging.getLogger(__name__)
 
 
 class NvidiaAIService:
-    """Client with NVIDIA primary + Gemini fallback for AI operations."""
+    """Client with NVIDIA primary (multi-model failover) + Gemini fallback for AI operations."""
+
+    FALLBACK_MODELS = [
+        "minimaxai/minimax-m3",
+        "openai/gpt-oss-20b",
+        "stepfun-ai/step-3.7-flash",
+    ]
 
     def __init__(self):
         self.nvidia_api_key = settings.NVIDIA_API_KEY
-        self.nvidia_model = getattr(settings, 'NVIDIA_MODEL', 'meta/llama-3.3-70b-instruct')
+        self.nvidia_model = getattr(settings, 'NVIDIA_MODEL', 'minimaxai/minimax-m3')
         self.nvidia_base_url = getattr(settings, 'NVIDIA_BASE_URL', 'https://integrate.api.nvidia.com/v1')
         self.gemini_api_key = getattr(settings, 'GEMINI_API_KEY', '')
         self.gemini_model = getattr(settings, 'GEMINI_MODEL', 'gemini-2.0-flash')
 
     def _chat_nvidia(self, messages: list, temperature: float = 0.7, max_tokens: int = 4096) -> str:
-        """Send a chat completion request to NVIDIA API."""
+        """Send a chat completion request to NVIDIA API with automatic model failover and retries."""
         headers = {
             "Authorization": f"Bearer {self.nvidia_api_key}",
             "Content-Type": "application/json",
         }
 
-        payload = {
-            "model": self.nvidia_model,
-            "messages": messages,
-            "temperature": temperature,
-            "max_tokens": max_tokens,
-        }
+        # Build candidate list with primary model first
+        models_to_try = [self.nvidia_model]
+        for m in self.FALLBACK_MODELS:
+            if m not in models_to_try:
+                models_to_try.append(m)
 
-        response = requests.post(
-            f"{self.nvidia_base_url}/chat/completions",
-            headers=headers,
-            json=payload,
-            timeout=120,
-        )
-        response.raise_for_status()
-        data = response.json()
-        return data["choices"][0]["message"]["content"]
+        last_error = None
+
+        for model in models_to_try:
+            max_retries = 2
+            for attempt in range(max_retries):
+                payload = {
+                    "model": model,
+                    "messages": messages,
+                    "temperature": temperature,
+                    "max_tokens": max_tokens,
+                }
+
+                try:
+                    logger.info(f"Attempting NVIDIA chat with model: {model} (attempt {attempt+1}/{max_retries})")
+                    response = requests.post(
+                        f"{self.nvidia_base_url}/chat/completions",
+                        headers=headers,
+                        json=payload,
+                        timeout=90,
+                    )
+                    if response.status_code == 429 and attempt < max_retries - 1:
+                        wait = 2.0 * (attempt + 1) + random.uniform(0.5, 1.5)
+                        logger.warning(f"NVIDIA rate limit on {model}, waiting {wait:.1f}s...")
+                        time.sleep(wait)
+                        continue
+
+                    response.raise_for_status()
+                    data = response.json()
+                    choice = data.get("choices", [{}])[0]
+                    message = choice.get("message", {})
+                    content = message.get("content")
+                    if not content and message.get("reasoning_content"):
+                        content = message.get("reasoning_content")
+                    
+                    if content and content.strip():
+                        return content.strip()
+                    else:
+                        raise ValueError(f"Empty content returned from {model}")
+
+                except Exception as e:
+                    last_error = e
+                    logger.warning(f"Model {model} failed: {e}")
+                    break  # Move to next candidate model
+
+        raise Exception(f"All NVIDIA models failed. Last error: {last_error}")
 
     def _chat_gemini(self, messages: list, temperature: float = 0.7, max_tokens: int = 4096) -> str:
         """Send a request to Google Gemini REST API with retry on 429."""
-        # Convert OpenAI-style messages to Gemini format
         gemini_contents = []
         system_instruction = None
 
@@ -88,59 +128,40 @@ class NvidiaAIService:
             "Content-Type": "application/json",
         }
 
-        max_retries = 3
+        max_retries = 2
         for attempt in range(max_retries):
             try:
-                response = requests.post(url, headers=headers, json=payload, timeout=120)
+                response = requests.post(url, headers=headers, json=payload, timeout=60)
                 if response.status_code == 429 and attempt < max_retries - 1:
                     wait = (2 ** (attempt + 1)) + random.uniform(0, 1)
-                    logger.warning(f"Gemini 429 rate limited (attempt {attempt+1}/{max_retries}), retrying in {wait:.1f}s...")
                     time.sleep(wait)
                     continue
                 response.raise_for_status()
                 data = response.json()
                 return data["candidates"][0]["content"]["parts"][0]["text"]
-            except requests.exceptions.HTTPError as e:
-                if e.response is not None and e.response.status_code == 429 and attempt < max_retries - 1:
-                    wait = (2 ** (attempt + 1)) + random.uniform(0, 1)
-                    logger.warning(f"Gemini 429 rate limited (attempt {attempt+1}/{max_retries}), retrying in {wait:.1f}s...")
-                    time.sleep(wait)
+            except Exception as e:
+                if attempt < max_retries - 1:
+                    time.sleep(1.5)
                     continue
                 raise
-        else:
-            raise Exception(f"Gemini API rate limited after {max_retries} retries.")
 
     def _chat(self, messages: list, temperature: float = 0.7, max_tokens: int = 4096) -> str:
         """
-        Send a chat request, trying Gemini first, then falling back to NVIDIA.
+        Send a chat request, trying NVIDIA primary models first, then falling back to Gemini.
         """
-        # Try Gemini first (more reliable, faster)
-        if self.gemini_api_key:
-            try:
-                logger.info(f"Calling Gemini API with model: {self.gemini_model}")
-                result = self._chat_gemini(messages, temperature, max_tokens)
-                logger.info("Gemini API call successful")
-                return result
-            except requests.exceptions.Timeout:
-                logger.warning("Gemini API timed out, trying NVIDIA fallback...")
-            except Exception as e:
-                logger.warning(f"Gemini API error: {e}, trying NVIDIA fallback...")
-
-        # Fallback to NVIDIA
         if self.nvidia_api_key:
             try:
-                logger.info(f"Calling NVIDIA API with model: {self.nvidia_model}")
-                result = self._chat_nvidia(messages, temperature, max_tokens)
-                logger.info("NVIDIA API call successful")
-                return result
+                return self._chat_nvidia(messages, temperature, max_tokens)
             except Exception as e:
-                logger.error(f"NVIDIA API error: {e}")
-                raise Exception(f"Both AI providers failed. NVIDIA error: {str(e)}")
+                logger.warning(f"NVIDIA API failed ({e}), trying Gemini fallback...")
 
-        # Both failed or not configured
-        raise Exception(
-            "AI service is unavailable. No AI providers configured."
-        )
+        if self.gemini_api_key:
+            try:
+                return self._chat_gemini(messages, temperature, max_tokens)
+            except Exception as e:
+                logger.warning(f"Gemini API failed ({e})")
+
+        raise Exception("AI service is unavailable. All AI providers failed.")
 
     def _generate_fallback_resume(self, prompt: str) -> str:
         """
