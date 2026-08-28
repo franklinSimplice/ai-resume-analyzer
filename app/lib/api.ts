@@ -171,7 +171,7 @@ async function apiFetch(
     );
   }
 
-  if (response.status === 401 && !isRetry) {
+  if (response.status === 401 && retryCount === 0) {
     // Attempt to refresh token
     const currentSession = getStoredSession();
     if (currentSession?.refresh_token) {
