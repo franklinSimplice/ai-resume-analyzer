@@ -16,12 +16,20 @@ function Upload() {
     const [isProcessing, setIsProcessing] = useState(false)
     const [status_text, setStatus_text] = useState('')
     const [file, setFile] = useState<File | null>(null)
+    const [serverWaking, setServerWaking] = useState(false)
 
     React.useEffect(() => {
         if (!auth.isAuthenticated) {
             navigate('/auth')
         }
     }, [auth.isAuthenticated, navigate])
+
+    // Listen for Render cold-start event from apiFetch
+    React.useEffect(() => {
+        const handler = () => setServerWaking(true);
+        window.addEventListener('server-waking', handler);
+        return () => window.removeEventListener('server-waking', handler);
+    }, [])
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -90,12 +98,19 @@ function Upload() {
             alert(error.message || "An unexpected error occurred during analysis.");
             setIsProcessing(false);
             setStatus_text('');
+            setServerWaking(false);
         }
     }
 
     return (
         <main className="bg-[url('/images/bg-main.svg')] bg-cover">
             <Navbar />
+            {serverWaking && (
+                <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-amber-50 border border-amber-300 text-amber-800 text-sm font-semibold px-5 py-3 rounded-2xl shadow-lg flex items-center gap-3 animate-in slide-in-from-top duration-500">
+                    <span className="text-lg">☕</span>
+                    Server is waking up from sleep — this may take up to 30 seconds…
+                </div>
+            )}
             <section className='main-section'>
                 <div className="page-heading">
                     <h1>{t('upload.title')}</h1>

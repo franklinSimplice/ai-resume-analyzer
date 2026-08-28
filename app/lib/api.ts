@@ -152,7 +152,8 @@ async function apiFetch(
 
   const targetUrl = buildApiUrl(path);
   let response: Response;
-  const maxRetries = 3;
+  // Render free tier can take up to 50s to wake from sleep — allow up to 75s total
+  const maxRetries = 5;
 
   try {
     response = await fetch(targetUrl, {
@@ -161,13 +162,17 @@ async function apiFetch(
     });
   } catch (err: any) {
     if (retryCount < maxRetries) {
-      // Progressively wait 3s, 5s, 7s in case backend is spinning up on Render free tier
-      const waitTime = (retryCount + 1) * 2500;
+      // On first retry, fire an event so the UI can show a "server waking up" notice
+      if (retryCount === 0 && typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('server-waking', { detail: { url: targetUrl } }));
+      }
+      // Exponential-ish backoff: 5s, 10s, 15s, 20s, 25s
+      const waitTime = (retryCount + 1) * 5000;
       await new Promise((r) => setTimeout(r, waitTime));
       return apiFetch(path, options, token, retryCount + 1);
     }
     throw new Error(
-      `Unable to reach backend API at ${targetUrl}. The server may be waking up from sleep. Please wait a moment and try again.`
+      `Unable to reach the server. It may still be waking up — please wait 30 seconds and try again.`
     );
   }
 
