@@ -134,7 +134,7 @@ async function apiFetch(
   path: string,
   options: RequestInit = {},
   token?: string,
-  isRetry = false
+  retryCount = 0
 ): Promise<any> {
   const session = token ? { access_token: token } : getStoredSession();
   const headers: Record<string, string> = {
@@ -152,19 +152,22 @@ async function apiFetch(
 
   const targetUrl = buildApiUrl(path);
   let response: Response;
+  const maxRetries = 3;
+
   try {
     response = await fetch(targetUrl, {
       ...options,
       headers,
     });
   } catch (err: any) {
-    if (!isRetry) {
-      // Auto-retry once after 2.5 seconds (in case backend is spinning up on Render free tier)
-      await new Promise((r) => setTimeout(r, 2500));
-      return apiFetch(path, options, token, true);
+    if (retryCount < maxRetries) {
+      // Progressively wait 3s, 5s, 7s in case backend is spinning up on Render free tier
+      const waitTime = (retryCount + 1) * 2500;
+      await new Promise((r) => setTimeout(r, waitTime));
+      return apiFetch(path, options, token, retryCount + 1);
     }
     throw new Error(
-      `Unable to reach backend API at ${targetUrl}. Please ensure your backend is live or waking up, then try again.`
+      `Unable to reach backend API at ${targetUrl}. The server may be waking up from sleep. Please wait a moment and try again.`
     );
   }
 
